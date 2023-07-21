@@ -1,0 +1,25 @@
+{
+  "name": "playwrightautomationtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npx playwright install",
+    "env:dev": "cross-env test_env=dev npx playwright test",
+    "env:qa": "cross-env test_env=qa npx playwright test",
+    "env:stage": "cross-env test_env=stage npx playwright test",
+    "test:perf": "cross-env test_env=perf npx playwright test",
+    "test:prod": "cross-env test_env=prod npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.36.1",
+    "browserstack-local": "^1.5.1"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3"
+  }
+}
