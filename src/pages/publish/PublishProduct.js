@@ -12,10 +12,22 @@ class PublishProduct {
         this.verifyProductPublishSubmitMsg = page.getByText("Product '"+SSOISBN+"' has been submitted for publish");
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
         this.deleteFolder = page.getByRole('menuitem', { name: 'Delete', exact: true });
+        this.productStatusPlanning = page.getByText('Product status: Planning');     
+        this.pencilIcon = page.locator('.css-1k1mc0e');
+        this.reviewState = page.getByText('Review', {exact: true });  
+        this.updateBtn = page.getByRole('button', { name: /Update/i });
+        this.verifyProductUpdatedMsg = page.getByText("Product '"+SSOISBN+"' information updated successfully.");
+        this.productStatusReview = page.getByText('Product status: Review');
     }
 
     async publishProduct(SSOISBN) {
         await expect(this.publishStateUncommitted).toHaveText("Uncommitted changes ");
+        await expect(this.productStatusPlanning).toHaveText("Product status: Planning");
+        await this.pencilIcon.click();
+        await this.reviewState.click();
+        await this.updateBtn.click();
+        await expect(this.verifyProductUpdatedMsg).toHaveText("Product '"+SSOISBN+"' information updated successfully.");
+        await expect(this.productStatusReview).toHaveText("Product status: Review");
         await this.publishIcon.click();
         await this.publishProductBtn.click();
         await expect(this.verifyProductPublishSubmitMsg).toHaveText("Product '"+SSOISBN+"' has been submitted for publish");
