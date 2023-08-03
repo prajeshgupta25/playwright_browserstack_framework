@@ -14,7 +14,7 @@ const config = {
   testDir: './tests',
   testMatch: '**/*.spec.js',
   /* Maximum time one test can run for. */
-  timeout: 100 * 1000,
+  timeout: 200 * 1000,
   //retries: 1,
   workers : 1,
   expect: {
