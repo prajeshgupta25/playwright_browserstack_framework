@@ -6,12 +6,13 @@ class ApiEndpoints
         this.apiContext = apiContext;
         this.VerifyWorkspacePayload = VerifyWorkspacePayload;
     }
-    async verifyProduct()
+    async verifyProduct(token,session)
     {
         const response1 = await this.apiContext.get(process.env.PBS_Service + "/api/v1/products/" + `${process.env.SSOISBN}`,
         {
             headers: {
                 'Content-Type': 'application/json',
+                'Cookie' : "PBS-X-XSRF-TOKEN="+token+"; SESSION="+session+"",
             },
         })
     const responseJson = await response1.json();
@@ -19,13 +20,14 @@ class ApiEndpoints
     return statusCode;
     }
 
-    async deleteProduct()
+    async deleteProduct(token,session)
     {
-        const res2 = await this.apiContext.delete(process.env.PBS_Service + "/api/v1/products/" + `${process.env.SSOISBN}`,
+        const res2 = await this.apiContext.delete(process.env.PBSEndPoint + "/api/v1/products/" + `${process.env.SSOISBN}`,
             {
                 headers: {
-                    'Content-Type': 'application/json',
-                    'cengage-sso-guid': 'cengage-sso-guid'
+                    'accept': 'text/plain',
+                    'PBS-X-XSRF-TOKEN' : token,
+                    'Cookie' : "PBS-X-XSRF-TOKEN="+token+"; SESSION="+session
                 },
             })
         expect(res2.ok()).toBeTruthy();

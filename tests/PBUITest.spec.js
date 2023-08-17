@@ -9,14 +9,28 @@ const { PublishProduct } = require('../src/pages/publish/PublishProduct');
 const { ApiEndpoints } = require('../src/pages/api/ApiEndpoints');
 const VerifyWorkspacePayload = { labels: [{ type: 'ssoIsbn', value: process.env.SSOISBN }] };
 
+let token;
+let session;
+
+test.beforeAll(async({browser}) => {
+    const context = await browser.newContext();  
+    const page = await context.newPage();
+    const Log = new Login(page);
+    //Fetch PB token and session cookie id
+    await Log.loginToFetchPBTokenAndSession(process.env.BASE_URL,process.env.USER_NAME, process.env.PASSWORD);
+    const cookie = await context.cookies(process.env.BASE_URL);
+    token = cookie[0].value;
+    session = cookie[1].value;
+    });
+
 test(`@PBS_Integration_Scenarios Verify PBS product with SSOISBN and delete it if exists`, async () => {
     const apiContext = await request.newContext();
     const apiEndpoints = new ApiEndpoints(apiContext);
     // Verify Product
-    const statusCode = await apiEndpoints.verifyProduct();
+    const statusCode = await apiEndpoints.verifyProduct(token,session);
     if (statusCode == "200") {
         // Delete Product
-        await apiEndpoints.deleteProduct();
+        await apiEndpoints.deleteProduct(token,session);
     }
 });
 
