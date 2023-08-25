@@ -6,6 +6,7 @@ class CreateProduct {
         this.nextIconBtn = page.getByTestId('WizardActionButtonNext');
         this.producTitle = page.getByLabel('Product Name');
         this.ssoIsbn = page.getByLabel('SSO ISBN');
+        this.eReaderIsbn = page.getByLabel('Cengage eReader ISBN');
         this.authors = page.getByLabel('Author');
         this.copyrightYear = page.getByLabel('Copyright Year');
         this.dropDown = page.getByTestId('selectTriggerButton');
@@ -16,7 +17,7 @@ class CreateProduct {
         this.finishBtn =  page.getByRole('button', { name: /Finish/i });
     }
 
-    async createProduct(ProductTitle, SSOISBN, Author, CopyrightYear) {
+    async createProduct(ProductTitle, SSOISBN, Author, CopyrightYear, eReaderISBN) {
         await this.createNewProduct.click();
         await this.scratchIcon.click();
         await this.nextIconBtn.click();
@@ -24,6 +25,8 @@ class CreateProduct {
         await this.producTitle.type(ProductTitle);
         await this.ssoIsbn.click();
         await this.ssoIsbn.type(SSOISBN);
+        await this.eReaderIsbn.click();
+        await this.eReaderIsbn.type(eReaderISBN);
         await this.authors.click();
         await this.authors.type(Author);
         await this.dropDown.first().click();
