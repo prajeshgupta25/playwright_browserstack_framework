@@ -60,6 +60,8 @@ class BuildLearningPath {
         this.practiceItOption = page.getByRole('option', { name: 'Practice It', exact: true });
         this.verifyReadingStubText = page.getByText('Unit 3. Business Communications', {exact: true });
         this.generalSettings = page.getByText('General Settings', {exact: true });
+        this.searchBar = page.getByPlaceholder('Find by content');
+        this.searchBtn = page.getByRole('button', { name: 'Search' });
     }
 
     async addNodesToLearningPath() {
@@ -112,6 +114,9 @@ class BuildLearningPath {
         await this.folderMenu.first().click();
         await this.addActivity.click();
         await this.searchActivitiesBtn.click();
+        await this.searchBar.click();
+        await this.searchBar.fill(activityReferenceId);
+        await this.searchBtn.click();
         await this.addToLearningPathBtn.first().click();
         await this.generalSettings.waitFor();
         await this.dropDown.click();

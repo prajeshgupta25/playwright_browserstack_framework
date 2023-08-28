@@ -41,8 +41,10 @@ test(`@PBS_Integration_Scenarios Verify PBS product workspace on LCS with SSOISB
     const responseJson = await apiEndpoints.verifyProductWorkspace();
     if (responseJson.workspaces[0] !== undefined) {
         const courseMasterWorkspaceId = responseJson.workspaces[0].id;
+        console.log("Course Master Workspace Id: "+courseMasterWorkspaceId);
         //Fetch the linked workspace
         const linkedResourceWorkspaceId = await apiEndpoints.fetchLinkedWorkspace(courseMasterWorkspaceId);
+        console.log("Linked Resource Workspace Id: "+linkedResourceWorkspaceId);
         // Delete the linked resource workspace
         await apiEndpoints.deleteWorkspace(linkedResourceWorkspaceId);
         // Delete the course master workspace

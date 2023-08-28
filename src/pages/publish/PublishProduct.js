@@ -10,7 +10,10 @@ class PublishProduct {
         this.publishIcon = page.getByTestId('publish-btn');
         this.publishProductBtn =  page.getByTestId('modal-content').getByRole('button', { name: /Publish Product/i });
         this.verifyProductPublishSubmitMsg = page.getByText("Product '"+SSOISBN+"' has been submitted for publish");
+        this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
+        this.addFolder = page.getByRole('menuitem', { name: 'Add Folder', exact: true });
+        this.addActivity = page.getByRole('menuitem', { name: 'Add Activity', exact: true });
         this.deleteFolder = page.getByRole('menuitem', { name: 'Delete', exact: true });
         this.productStatusPlanning = page.getByText('Product status: Planning');     
         this.pencilIcon = page.locator('.css-1k1mc0e');
@@ -52,7 +55,11 @@ class PublishProduct {
             }     
         }
         await expect(this.publishStatePublished).toHaveText("All changes published");
-        await this.folderMenu.first().click();
+        await this.learningPathMenu.click();
+        await this.addFolder.click();
+        await this.folderMenu.nth(1).click();
+        await this.addActivity.click();
+        await this.folderMenu.nth(1).click();
         await this.deleteFolder.click();
     }
 }
