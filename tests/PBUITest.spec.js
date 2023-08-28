@@ -61,7 +61,7 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     //Login with Valid credentials
     await Log.validLogin(process.env.USER_NAME, process.env.PASSWORD);
     //Create a new Product
-    await CreateProd.createProduct(process.env.ProductTitle, process.env.SSOISBN, process.env.Author, process.env.CopyrightYear);
+    await CreateProd.createProduct(process.env.ProductTitle, process.env.SSOISBN, process.env.Author, process.env.CopyrightYear, process.env.eReaderISBN);
     //Add nodes to Learning Path
     await BuildLPN.addNodesToLearningPath();
 });
