@@ -8,7 +8,7 @@ class ApiEndpoints
     }
     async verifyProduct(token,session)
     {
-        const response1 = await this.apiContext.get(process.env.PBS_Service + "/api/v1/products/" + `${process.env.SSOISBN}`,
+        const response1 = await this.apiContext.get(process.env.PBSEndPoint + "/api/v1/products/" + `${process.env.SSOISBN}`,
         {
             headers: {
                 'Content-Type': 'application/json',

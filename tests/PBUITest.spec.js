@@ -19,8 +19,8 @@ test.beforeAll(async({browser}) => {
     //Fetch PB token and session cookie id
     await Log.loginToFetchPBTokenAndSession(process.env.BASE_URL,process.env.USER_NAME, process.env.PASSWORD);
     const cookie = await context.cookies(process.env.BASE_URL);
-    token = cookie[0].value;
-    session = cookie[1].value;
+    token = cookie[9].value;
+    session = cookie[10].value;
     });
 
 test(`@PBS_Integration_Scenarios Verify PBS product with SSOISBN and delete it if exists`, async () => {
