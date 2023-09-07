@@ -19,8 +19,23 @@ test.beforeAll(async({browser}) => {
     //Fetch PB token and session cookie id
     await Log.loginToFetchPBTokenAndSession(process.env.BASE_URL,process.env.USER_NAME, process.env.PASSWORD);
     const cookie = await context.cookies(process.env.BASE_URL);
-    token = cookie[9].value;
-    session = cookie[10].value;
+    for(let i=0;i<12;i++)
+    {
+        if(cookie[i].name==="PBS-X-XSRF-TOKEN")
+        {
+            token = cookie[i].value;
+            console.log(token);
+        }
+        if(cookie[i].name==="SESSION")
+        {
+            session = cookie[i].value;
+            console.log(session);
+        }
+        else
+        {
+            continue;
+        }
+    }
     });
 
 test(`@PBS_Integration_Scenarios Verify PBS product with SSOISBN and delete it if exists`, async () => {
