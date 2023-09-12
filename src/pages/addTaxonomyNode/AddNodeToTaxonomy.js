@@ -8,6 +8,7 @@ class AddNodeToTaxonomy {
         this.taxonomyStatusPlanning = page.getByText('Planning', { exact: true });
         this.taxonomyStatusReview = page.getByText('Review', { exact: true });
         this.taxonomyStatusComplete = page.getByText('Complete', { exact: true });
+        this.cancelBtn = page.getByRole('button', { name: 'Cancel', exact: true });
         this.taxonomyUpdateBtn = page.getByTestId('update-btn');
         this.taxonomyMenu = page.getByRole('button', { name: 'taxonomy-terms-menu' });
         this.addNode = page.getByRole('menuitem', { name: 'Add Node', exact: true });
@@ -23,10 +24,13 @@ class AddNodeToTaxonomy {
 
     async addNodeToTaxonomy() {
         await expect(this.taxonomyStatus).toBeVisible(); 
-        const boolStatus = await this.taxonomyStatusPlanning.isVisible();
-        console.log(!boolStatus);
+        await this.taxonomyStatusBtn.click();
+        const boolStatus = await this.taxonomyStatusPlanning.isChecked();
+        console.log(boolStatus);
+        if(boolStatus){
+            await this.cancelBtn.click();
+        }
         if(!boolStatus){
-            await this.taxonomyStatusBtn.click();
             await this.taxonomyStatusPlanning.check();
             await this.taxonomyUpdateBtn.click();
             await expect(this.verifyTaxonomyStatusChangeMsg).toHaveText("Taxonomy information was successfully edited!");
