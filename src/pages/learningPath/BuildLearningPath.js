@@ -2,7 +2,7 @@ const { expect } = require("@playwright/test");
 
 class BuildLearningPath {
 
-    constructor(page) {
+    constructor(page,ReadingStubOption) {
         this.page = page;
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
@@ -54,11 +54,11 @@ class BuildLearningPath {
         this.ratingItem = page.getByText("Rating", {exact: true });
         this.activityTitle = page.locator("#Title");
         this.addReadingBtn = page.getByRole('button', { name: 'add a reading', exact: true });
-        this.readingUnitOption = page.getByText("Unit 3. Business Communications", {exact: true });
+        this.readingUnitOption = page.getByText(ReadingStubOption, {exact: true });
         this.addToStubBtn = page.getByRole('button', { name: 'Add to Stub', exact: true });
         this.dropDown = page.getByTestId('selectedItemText');
         this.practiceItOption = page.getByRole('option', { name: 'Practice It', exact: true });
-        this.verifyReadingStubText = page.getByText('Unit 3. Business Communications', {exact: true });
+        this.verifyReadingStubText = page.getByText(ReadingStubOption, {exact: true });
         this.generalSettings = page.getByText('General Settings', {exact: true });
         this.searchBar = page.getByPlaceholder('Find by content');
         this.searchBtn = page.getByRole('button', { name: 'Search' });

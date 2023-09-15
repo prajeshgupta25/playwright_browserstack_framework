@@ -25,11 +25,13 @@ test.beforeAll(async({browser}) => {
         {
             token = cookie[i].value;
             console.log(token);
+            continue;
         }
         if(cookie[i].name==="SESSION")
         {
             session = cookie[i].value;
             console.log(session);
+            break;
         }
         else
         {
@@ -72,7 +74,7 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     const Log = new Login(page);
     const CreateProd = new CreateProduct(page,process.env.Discipline);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const BuildLPN = new BuildLearningPath(page);
+    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials

@@ -30,7 +30,7 @@ export BASE_URL='https://pb-qa.cengage.com'; export Taxman_URL='https://taxman-q
 $Env:BASE_URL='https://pb-dev.cengage.com'; $Env:Taxman_URL='https://taxman-dev.cengage.com'; $Env:SSOISBN='1111000200705'; $Env:eReaderISBN='9780357710586' ;$Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='pbs_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:dev
 
 * QA
-$Env:BASE_URL='https://pb-qa.cengage.com'; $Env:Taxman_URL='https://taxman-qa.cengage.com'; $Env:SSOISBN='1111000190707';$Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='pbs_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:qa
+$Env:BASE_URL='https://pb-qa.cengage.com'; $Env:Taxman_URL='https://taxman-qa.cengage.com'; $Env:SSOISBN='1111000190707'; $Env:eReaderISBN='9781111111111'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='pbs_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:qa
 
 1. Set the BrowserAndVersion Example: $Env:BrowserAndVersion='chrome@latest'
 # For more BrowserAndVersion refer to the following options:
