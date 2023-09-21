@@ -9,6 +9,8 @@ class BuildLearningPath {
         this.addFolder = page.getByRole('menuitem', { name: 'Add Folder', exact: true });
         this.addActivity = page.getByRole('menuitem', { name: 'Add Activity', exact: true });
         this.addReading = page.getByRole('menuitem', { name: 'Add Reading', exact: true });
+        this.addLTI = page.getByRole('menuitem', { name: 'Add LTI', exact: true });
+        this.addSCORM = page.getByRole('menuitem', { name: 'Add SCORM', exact: true });
         this.activityStub = page.getByText('Activity Stub', {exact: true });
         this.renameActivityStub = page.getByRole('menuitem', { name: 'Rename', exact: true });
         this.renameStubText = page.locator('.css-3ji70b');
@@ -62,6 +64,9 @@ class BuildLearningPath {
         this.generalSettings = page.getByText('General Settings', {exact: true });
         this.searchBar = page.getByPlaceholder('Find by content');
         this.searchBtn = page.getByRole('button', { name: 'Search' });
+        this.addCGID = page.getByTestId('cgid');
+        this.verfiyLTIStubHeading = page.getByRole('heading', { name: 'LTI Stub', exact: true });
+        this.verfiySCORMStubHeading = page.getByRole('heading', { name: 'SCORM Stub', exact: true });
     }
 
     async addNodesToLearningPath() {
@@ -128,7 +133,9 @@ class BuildLearningPath {
             return getComputedStyle(el).backgroundColor;
         });
         console.log(stubColor);
-        expect(stubColor).toBe("rgb(255, 255, 255)")        
+        expect(stubColor).toBe("rgb(255, 255, 255)")  
+        await this.addLTIStub();
+        await this.addSCORMStub();
     }
 
     async authorMultipleChoiceStandardActivityItem() {
@@ -257,6 +264,24 @@ class BuildLearningPath {
         await this.backBtn.click();
         const bool7 = await this.createdItem.nth(7).isVisible();
         expect(bool7).toBeTruthy();
+    }
+
+    async addLTIStub() {
+        await this.folderMenu.first().click();
+        await this.addLTI.click();
+        await this.addCGID.click();
+        await this.addCGID.type("XYZCGIDLTI");
+        await this.saveBtn.click();      
+        await expect(this.verfiyLTIStubHeading).toHaveText("LTI Stub");
+    }
+
+    async addSCORMStub() {
+        await this.folderMenu.first().click();
+        await this.addSCORM.click();
+        await this.addCGID.click();
+        await this.addCGID.type("XYZCGIDSCORM");
+        await this.saveBtn.click();      
+        await expect(this.verfiySCORMStubHeading).toHaveText("SCORM Stub");
     }
 }
 module.exports = { BuildLearningPath };
