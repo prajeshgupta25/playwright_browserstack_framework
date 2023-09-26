@@ -74,7 +74,7 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     const Log = new Login(page);
     const CreateProd = new CreateProduct(page,process.env.Discipline);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption);
+    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption,process.env.SSOISBN);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials
@@ -82,7 +82,7 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     //Create a new Product
     await CreateProd.createProduct(process.env.ProductTitle, process.env.SSOISBN, process.env.Author, process.env.CopyrightYear, process.env.eReaderISBN);
     //Add nodes to Learning Path
-    await BuildLPN.addNodesToLearningPath();
+    await BuildLPN.addNodesToLearningPath(process.env.SSOISBN);
 });
 
 test(`@PBS_Integration_Scenarios Validate associate and diassociate taxonomy`, async ({ page }) => {
