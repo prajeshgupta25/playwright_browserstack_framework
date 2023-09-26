@@ -2,7 +2,7 @@ const { expect } = require("@playwright/test");
 
 class BuildLearningPath {
 
-    constructor(page,ReadingStubOption) {
+    constructor(page,ReadingStubOption,SSOISBN) {
         this.page = page;
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
@@ -67,9 +67,18 @@ class BuildLearningPath {
         this.addCGID = page.getByTestId('cgid');
         this.verfiyLTIStubHeading = page.getByRole('heading', { name: 'LTI Stub', exact: true });
         this.verfiySCORMStubHeading = page.getByRole('heading', { name: 'SCORM Stub', exact: true });
+        this.productStatusPlanning = page.getByText('Product status: Planning');     
+        this.pencilIcon = page.locator('.css-1k1mc0e');
+        this.authoringState = page.getByText('Authoring', {exact: true });  
+        this.planningState = page.getByText('Planning', {exact: true });  
+        this.updateBtn = page.getByRole('button', { name: /Update/i });
+        this.verifyProductUpdatedMsg = page.getByText("Product '"+SSOISBN+"' information updated successfully.");
+        this.productStatusAuthoring = page.getByText('Product status: Authoring');
+        this.structureChangesDisabledBtn = page.getByTestId('structure-changes-disabled');
+        this.deleteFolder = page.getByRole('menuitem', { name: 'Delete', exact: true });
     }
 
-    async addNodesToLearningPath() {
+    async addNodesToLearningPath(SSOISBN) {
         await this.learningPathMenu.click();
         await this.addFolder.click();
         await this.folderMenu.click();
@@ -136,6 +145,7 @@ class BuildLearningPath {
         expect(stubColor).toBe("rgb(255, 255, 255)")  
         await this.addLTIStub();
         await this.addSCORMStub();
+        await this.lockLearningPathStructure(SSOISBN);
     }
 
     async authorMultipleChoiceStandardActivityItem() {
@@ -282,6 +292,24 @@ class BuildLearningPath {
         await this.addCGID.type("XYZCGIDSCORM");
         await this.saveBtn.click();      
         await expect(this.verfiySCORMStubHeading).toHaveText("SCORM Stub");
+    }
+
+    async lockLearningPathStructure(SSOISBN){
+        await expect(this.productStatusPlanning).toHaveText("Product status: Planning");
+        await this.pencilIcon.click();
+        await this.authoringState.click();
+        await this.updateBtn.click();
+        await expect(this.verifyProductUpdatedMsg).toHaveText("Product '"+SSOISBN+"' information updated successfully.");
+        await expect(this.productStatusAuthoring).toHaveText("Product status: Authoring");
+        await expect(this.structureChangesDisabledBtn).toBeVisible();
+        await this.folderMenu.first().click();
+        await expect(this.addActivity).toBeDisabled();
+        await expect(this.deleteFolder).toBeDisabled(); 
+        await this.pencilIcon.click();
+        await this.planningState.click();
+        await this.updateBtn.click();  
+        await expect(this.verifyProductUpdatedMsg).toHaveText("Product '"+SSOISBN+"' information updated successfully.");
+        await expect(this.productStatusPlanning).toHaveText("Product status: Planning");
     }
 }
 module.exports = { BuildLearningPath };
