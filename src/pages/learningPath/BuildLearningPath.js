@@ -54,7 +54,7 @@ class BuildLearningPath {
         this.clozeChemistryItem = page.getByText("Cloze chemistry", {exact: true });
         this.otherOption = page.getByText('Other', {exact: true });
         this.ratingItem = page.getByText("Rating", {exact: true });
-        this.activityTitle = page.locator("#Title");
+        this.activityTitle = page.getByPlaceholder('Say something about this activity');
         this.addReadingBtn = page.getByRole('button', { name: 'add a reading', exact: true });
         this.readingUnitOption = page.getByText(ReadingStubOption, {exact: true });
         this.addToStubBtn = page.getByRole('button', { name: 'Add to Stub', exact: true });
@@ -89,14 +89,13 @@ class BuildLearningPath {
         console.log(initialColor);
         await this.activityStub.click();
         await this.createActivityBtn.click();
-        await this.authorMultipleChoiceStandardActivityItem();
-        await this.detailTab.click();
+        await this.createItem.waitFor();
         await this.activityTitle.click();
         await this.activityTitle.type("ActivityTitle");
+        await this.authorMultipleChoiceStandardActivityItem();
+        await this.detailTab.click();
         const activityReferenceId = await this.referenceId.getAttribute('value');
         console.log(activityReferenceId);
-        await this.saveBtn.click();
-        await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
         await this.itemsTab.click();
         const changedColor = await this.stubColor.nth(1).evaluate((el) => {
             return getComputedStyle(el).backgroundColor;
@@ -156,6 +155,7 @@ class BuildLearningPath {
         await this.selectAnswer.click();
         await this.saveBtn.click();
         await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
+        await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
         await this.backBtn.click();
         const bool = await this.createdItem.isVisible();
         expect(bool).toBeTruthy();
