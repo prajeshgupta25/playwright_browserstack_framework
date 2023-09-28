@@ -35,7 +35,25 @@ class PublishProduct {
         await this.publishProductBtn.click();
         await expect(this.verifyProductPublishSubmitMsg).toHaveText("Product '"+SSOISBN+"' has been submitted for publish");
         await this.page.reload();
-        await this.publishStatePublished.waitFor();
+        await this.page.waitForLoadState('networkidle');
+        for(let i=0;i<7;++i) // Currently application is not dynamically refresing publish status, will remove this code once it's implemented
+        {
+            if(await this.publishStatePublishing.isVisible())
+            {
+                await this.page.reload(); 
+                await this.page.waitForLoadState('networkidle');
+                continue;
+            }
+            else if(await this.publishStateSubmitted.isVisible())
+            {
+                await this.page.reload(); 
+                await this.page.waitForLoadState('networkidle');
+                continue;
+            }
+            else {
+                break;
+            }     
+        }
         await expect(this.publishStatePublished).toHaveText("All changes published");
         await this.learningPathMenu.click();
         await this.addFolder.click();
