@@ -58,6 +58,9 @@ class BuildLearningPath {
         this.addReadingBtn = page.getByRole('button', { name: 'add a reading', exact: true });
         this.readingUnitOption = page.getByText(ReadingStubOption, {exact: true });
         this.addToStubBtn = page.getByRole('button', { name: 'Add to Stub', exact: true });
+        this.verifyReadingStubAddMsg = page.getByText("Reading was successfully added to stub");
+        this.verifyLTIStubAddMsg = page.getByText("LTI Activity was successfully added to stub");
+        this.verifySCORMStubAddMsg = page.getByText("SCORM Activity was successfully added to stub");
         this.dropDown = page.getByTestId('selectedItemText');
         this.practiceItOption = page.getByRole('option', { name: 'Practice It', exact: true });
         this.verifyReadingStubText = page.getByText(ReadingStubOption, {exact: true });
@@ -120,29 +123,8 @@ class BuildLearningPath {
         await this.renameStubText.click();
         await this.renameStubText.type(" Test Folder 1");
         await this.folderMenu.nth(1).click();
-        await this.folderMenu.first().click();
-        await this.addReading.click();
-        await this.addReadingBtn.click();
-        await this.readingUnitOption.click();
-        await this.addToStubBtn.click();
-        await this.folderMenu.first().click();
-        await this.addActivity.click();
-        await this.searchActivitiesBtn.click();
-        await this.searchBar.click();
-        await this.searchBar.fill(activityReferenceId);
-        await this.searchBtn.click();
-        await this.addToLearningPathBtn.first().click();
-        await this.generalSettings.waitFor();
-        await this.dropDown.click();
-        await this.practiceItOption.click();
-        await this.saveBtn.click();
-        await this.verifyActivityAddedMsg.hover();
-        await expect(this.verifyActivityAddedMsg).toHaveText("Activity was successfully added");
-        const stubColor = await this.stubColor.nth(3).evaluate((el) => {
-            return getComputedStyle(el).backgroundColor;
-        });
-        console.log(stubColor);
-        expect(stubColor).toBe("rgb(255, 255, 255)")  
+        await this.addReadingStub();
+        //await this.addExistingActivityByDuplicateToLPN(activityReferenceId);
         await this.addLTIStub();
         await this.addSCORMStub();
         await this.lockLearningPathStructure(SSOISBN);
@@ -301,12 +283,43 @@ class BuildLearningPath {
         expect(bool7).toBeTruthy();
     }
 
+    async addExistingActivityByDuplicateToLPN(activityReferenceId){
+        await this.folderMenu.first().click();
+        await this.addActivity.click();
+        await this.searchActivitiesBtn.click();
+        await this.searchBar.click();
+        await this.searchBar.fill(activityReferenceId);
+        await this.searchBtn.click();
+        await this.addToLearningPathBtn.first().click();
+        await this.generalSettings.waitFor();
+        await this.dropDown.click();
+        await this.practiceItOption.click();
+        await this.saveBtn.click();
+        await this.verifyActivityAddedMsg.hover();
+        await expect(this.verifyActivityAddedMsg).toHaveText("Activity was successfully added");
+        const stubColor = await this.stubColor.nth(3).evaluate((el) => {
+            return getComputedStyle(el).backgroundColor;
+        });
+        console.log(stubColor);
+        expect(stubColor).toBe("rgb(255, 255, 255)")  
+    }
+
+    async addReadingStub() {
+        await this.folderMenu.first().click();
+        await this.addReading.click();
+        await this.addReadingBtn.click();
+        await this.readingUnitOption.click();
+        await this.addToStubBtn.click();
+        await expect(this.verifyReadingStubAddMsg).toHaveText("Reading was successfully added to stub");
+    }
+
     async addLTIStub() {
         await this.folderMenu.first().click();
         await this.addLTI.click();
         await this.addCGID.click();
-        await this.addCGID.type("XYZCGIDLTI");
-        await this.saveBtn.click();      
+        await this.addCGID.type("C40YZG1QGBYNRH8RME569AY45ZNNZZDJ");
+        await this.saveBtn.click();  
+        await expect(this.verifyLTIStubAddMsg).toHaveText("LTI Activity was successfully added to stub");
         await expect(this.verfiyLTIStubHeading).toHaveText("LTI Stub");
     }
 
@@ -314,8 +327,9 @@ class BuildLearningPath {
         await this.folderMenu.first().click();
         await this.addSCORM.click();
         await this.addCGID.click();
-        await this.addCGID.type("XYZCGIDSCORM");
-        await this.saveBtn.click();      
+        await this.addCGID.type("ZZ8QEL1RC1A4T3JEXA9ZHXEX8RCJCYQ4");
+        await this.saveBtn.click();     
+        await expect(this.verifySCORMStubAddMsg).toHaveText("SCORM Activity was successfully added to stub"); 
         await expect(this.verfiySCORMStubHeading).toHaveText("SCORM Stub");
     }
 
