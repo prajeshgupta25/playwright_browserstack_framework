@@ -89,7 +89,7 @@ test(`@PBS_Integration_Scenarios Validate associate and diassociate taxonomy`, a
 
     const Log = new Login(page);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyOption,process.env.TaxonomyOption2);
+    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials
@@ -97,7 +97,7 @@ test(`@PBS_Integration_Scenarios Validate associate and diassociate taxonomy`, a
     //Search and Navigate to the existing Product
     await SearchProd.searchAndNavigateToProduct(process.env.SSOISBN);
     //Associate and diassociate taxonomy
-    await Taxonomy.taxonomyAssociateAndDiassociate(process.env.SSOISBN,process.env.TaxonomyOption,process.env.TaxonomyOption2);
+    await Taxonomy.taxonomyAssociateAndDiassociate(process.env.SSOISBN,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4);
 });
 
 
