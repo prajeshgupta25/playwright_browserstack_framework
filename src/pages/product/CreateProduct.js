@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class CreateProduct {
     constructor(page,Discipline) {
         this.page = page;
@@ -14,7 +16,9 @@ class CreateProduct {
         this.disciplineOption = page.getByRole('option', { name: Discipline, exact: true });
         this.editionOption = page.getByRole('option', { name: '1st Edition', exact: true });
         this.selectOptionSetPracticeIt = page.getByText('Practice It');
+        this.selectOptionSetUseIt = page.getByText('Use It');
         this.finishBtn =  page.getByRole('button', { name: /Finish/i });
+        this.verifyCreateProductMsg = page.getByText("Your product was successfully created");    
     }
 
     async createProduct(ProductTitle, SSOISBN, Author, CopyrightYear, eReaderISBN) {
@@ -39,7 +43,9 @@ class CreateProduct {
         await this.copyrightYear.type(CopyrightYear);
         await this.nextIconBtn.click();
         await this.selectOptionSetPracticeIt.click();
+        await this.selectOptionSetUseIt.click();
         await this.finishBtn.click();
+        await expect(this.verifyCreateProductMsg).toHaveText("Your product was successfully created");
         //await this.page.pause();
     }
 }
