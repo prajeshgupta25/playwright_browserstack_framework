@@ -17,6 +17,7 @@ class AddNodeToTaxonomy {
         this.nodeDescription = page.getByLabel('Description');
         this.saveBtn = page.getByRole('button', { name: 'Save', exact: true });
         this.nodeMenu = page.getByRole('button', { name: 'taxonomy node actions' });
+        this.nodeDropDownMenu = page.getByRole('button', { name: 'Expand taxonomy term node' , exact: true});
         this.verifyNodeAddedMsg = page.getByText("Taxonomy term was successfully added!");
         this.verifyNodeDeletedMsg = page.getByText("Taxonomy term was successfully deleted!");
         this.verifyTaxonomyStatusChangeMsg = page.getByText("Taxonomy information was successfully edited!");
@@ -70,16 +71,8 @@ class AddNodeToTaxonomy {
         await this.nodeDescription.fill("Child Description");
         await this.saveBtn.click();
         await expect(this.verifyNodeAddedMsg).toHaveText("Taxonomy term was successfully added!");
-        await this.taxonomyStatusBtn.click();
-        await this.taxonomyStatusComplete.check();
-        await this.taxonomyUpdateBtn.click();
-        await expect(this.verifyTaxonomyStatusChangeMsg).toHaveText("Taxonomy information was successfully edited!");
-        await this.nodeMenu.last().click();
-        await expect(this.deleteNode).toBeHidden();
-        await this.taxonomyStatusBtn.click();
-        await this.taxonomyStatusReview.check();
-        await this.taxonomyUpdateBtn.click();
-        await expect(this.verifyTaxonomyStatusChangeMsg).toHaveText("Taxonomy information was successfully edited!");
+        await this.nodeDropDownMenu.last().click();
+        await this.nodeDropDownMenu.last().click();
         await this.nodeMenu.last().click();
         await this.deleteNode.click();
         await expect(this.verifyNodeDeletedMsg).toHaveText("Taxonomy term was successfully deleted!");
@@ -87,6 +80,8 @@ class AddNodeToTaxonomy {
         await this.taxonomyStatusComplete.check();
         await this.taxonomyUpdateBtn.click();
         await expect(this.verifyTaxonomyStatusChangeMsg).toHaveText("Taxonomy information was successfully edited!");
+        await this.nodeMenu.last().click();
+        await expect(this.deleteNode).toBeHidden();
         await this.taxonomyMenu.click();
         await this.addNode.click();
         await this.nodeName.click();
