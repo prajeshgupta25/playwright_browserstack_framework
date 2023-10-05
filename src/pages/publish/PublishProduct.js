@@ -37,6 +37,9 @@ class PublishProduct {
         await this.page.reload();
         await this.publishStatePublished.waitFor();
         await expect(this.publishStatePublished).toHaveText("All changes published");
+    }
+
+    async addAndDeleteFolder() {
         await this.learningPathMenu.click();
         await this.addFolder.click();
         await this.folderMenu.nth(1).click();
