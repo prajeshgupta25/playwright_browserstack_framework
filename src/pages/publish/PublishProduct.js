@@ -55,6 +55,9 @@ class PublishProduct {
             }     
         }
         await expect(this.publishStatePublished).toHaveText("All changes published");
+    }
+
+    async addAndDeleteFolder() {
         await this.learningPathMenu.click();
         await this.addFolder.click();
         await this.folderMenu.nth(1).click();
