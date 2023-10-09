@@ -36,7 +36,7 @@ class PublishProduct {
         await expect(this.verifyProductPublishSubmitMsg).toHaveText("Product '"+SSOISBN+"' has been submitted for publish");
         await this.page.reload();
         await this.page.waitForLoadState('networkidle');
-        for(let i=0;i<7;++i) // Currently application is not dynamically refresing publish status, will remove this code once it's implemented
+        for(let i=0;i<10;++i) // Currently application is not dynamically refresing publish status, will remove this code once it's implemented
         {
             if(await this.publishStatePublishing.isVisible())
             {
