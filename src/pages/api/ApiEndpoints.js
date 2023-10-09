@@ -93,7 +93,8 @@ class ApiEndpoints
     const fileType8 = responseJson.members[7].coords.fileType;
     const fileType9 = responseJson.members[8].coords.fileType;
     const fileType10 = responseJson.members[9].coords.fileType;
-    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10];
+    const fileType11 = responseJson.members[10].coords.fileType;   
+    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10, fileType11];
     console.log(File);
     let countCDFFile=0, countGDFFile=0, countNDFFile=0 ;
     for(let i=0; i<File.length; i++)
@@ -133,7 +134,8 @@ class ApiEndpoints
     const fileType5 = responseJson.members[4].coords.fileType;
     const fileType6 = responseJson.members[5].coords.fileType;
     const fileType7 = responseJson.members[6].coords.fileType;
-    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7];
+    const fileType8 = responseJson.members[7].coords.fileType;
+    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8];
     console.log(File);
     let countTxnFile=0, countActivityFile=0;
     for(let i=0; i<File.length; i++)
@@ -148,7 +150,7 @@ class ApiEndpoints
         }
     }
     expect(countTxnFile).toBe(3);
-    expect(countActivityFile).toBe(4);
+    expect(countActivityFile).toBe(5);
     }
 
     async validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId)
