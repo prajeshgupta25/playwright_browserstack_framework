@@ -20,6 +20,7 @@ class BuildLearningPath {
         this.multipleChoiceItem = page.getByText("Multiple choice – standard");
         this.selectAnswer = page.locator('.lrn-mcq-option').first();
         this.saveBtn = page.getByRole('button', { name: /Save/i });
+        this.saveAndNextBtn = page.getByRole('button', { name: /Save And Next/i });
         this.itemAddedMsg = page.getByText("Item successfully added to the Activity");
         this.stubColor = page.locator('.css-1if258x');
         this.backBtn = page.getByRole('button', { name: /Back/i });
@@ -56,6 +57,7 @@ class BuildLearningPath {
         this.ratingItem = page.getByText("Rating", {exact: true });
         this.activityTitle = page.getByPlaceholder('Say something about this activity');
         this.addReadingBtn = page.getByRole('button', { name: 'add a reading', exact: true });
+        this.nodeDropDown = page.getByRole('button', { name: 'Expand reading activity node', exact: true });
         this.readingUnitOption = page.getByText(ReadingStubOption, {exact: true });
         this.addToStubBtn = page.getByRole('button', { name: 'Add to Stub', exact: true });
         this.verifyReadingStubAddMsg = page.getByText("Reading was successfully added to stub");
@@ -98,6 +100,10 @@ class BuildLearningPath {
         console.log(initialColor);
         await this.activityStub.click();
         await this.createActivityBtn.click();
+        await this.generalSettings.waitFor();
+        await this.dropDown.click();
+        await this.practiceItOption.click();
+        await this.saveAndNextBtn.click();
         await this.createItem.waitFor();
         await this.activityTitle.click();
         await this.activityTitle.type("ActivityTitle");
@@ -326,6 +332,7 @@ class BuildLearningPath {
         await this.folderMenu.first().click();
         await this.addReading.click();
         await this.addReadingBtn.click();
+        await this.nodeDropDown.first().click();
         await this.readingUnitOption.click();
         await this.addToStubBtn.click();
         await expect(this.verifyReadingStubAddMsg).toHaveText("Reading was successfully added to stub");
