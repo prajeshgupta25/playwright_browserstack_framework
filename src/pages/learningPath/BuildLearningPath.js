@@ -2,7 +2,7 @@ const { expect } = require("@playwright/test");
 
 class BuildLearningPath {
 
-    constructor(page,ReadingStubOption,SSOISBN) {
+    constructor(page,ReadingStubOption,SSOISBN,ChapterTaxonomyOption) {
         this.page = page;
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
@@ -12,6 +12,7 @@ class BuildLearningPath {
         this.addLTI = page.getByRole('menuitem', { name: 'Add LTI', exact: true });
         this.addSCORM = page.getByRole('menuitem', { name: 'Add SCORM', exact: true });
         this.activityStub = page.getByText('Activity Stub', {exact: true });
+        this.activityTitleStub = page.getByText('ActivityTitle Test Activity 1', {exact: true });
         this.renameActivityStub = page.getByRole('menuitem', { name: 'Rename', exact: true });
         this.renameStubText = page.locator('.css-3ji70b');
         this.createActivityBtn = page.getByText('Create activity');
@@ -30,6 +31,7 @@ class BuildLearningPath {
         this.verifyActivityAddedMsg = page.getByText("Activity was successfully added");
         this.verifyActivitySaveMsg = page.getByText("Activity was successfully saved");
         this.detailTab = page.locator("[data-authorapi-tooltip='Details']");
+        this.tagsTab = page.locator("[data-authorapi-tooltip='Tags']");
         this.itemsTab =  page.getByRole('button', { name: /Items Tab/i });
         this.referenceId = page.locator("#Reference"); 
         this.fillInTheBlankClozeOption = page.getByText('Fill in the Blanks (Cloze)', {exact: true });
@@ -87,9 +89,20 @@ class BuildLearningPath {
         this.structureChangesDisabledBtn = page.getByTestId('structure-changes-disabled');
         this.deleteFolder = page.getByRole('menuitem', { name: 'Delete', exact: true });
         this.composeQuestion = page.getByRole('textbox');
+        this.verfiyActivityTagsHeading = page.getByRole('heading', { name: 'Activity Tags', exact: true });
+        this.caretDown = page.getByTestId('caretDown');
+        this.taxonomyOption = page.getByRole('option', { name: ChapterTaxonomyOption, exact: true });
+        this.tagOption = page.getByText('Chapter Taxonomy Parent Node 1', {exact: true });
+        this.tagOptionRemove = page.getByTestId('remove-term-Chapter Taxonomy Parent Node 1');
+        this.itemTitleBtn = page.getByRole('button', { name: 'Untitled', exact: true });
+        this.itemSettingBtn = page.locator("[data-authorapi-selector='settings']");
+        this.itemTagsTabBtn = page.getByRole('button', { name: 'Tags', exact: true });
+        this.verfiyItemTagsHeading = page.getByRole('heading', { name: 'Item Tags', exact: true });
+        this.applyBtn = page.getByRole('button', { name: 'APPLY', exact: true });
+        this.crossBtn = page.locator("[data-authorapi-selector='item-settings-exit-button']");
     }
 
-    async addNodesToLearningPath(SSOISBN) {
+    async addNodesToLearningPath() {
         await this.learningPathMenu.click();
         await this.addFolder.click();
         await this.folderMenu.click();
@@ -138,7 +151,6 @@ class BuildLearningPath {
         await this.addExistingActivityByDuplicateToLPN(activityReferenceId);
         await this.addLTIStub();
         await this.addSCORMStub();
-        await this.lockLearningPathStructure(SSOISBN);
     }
 
     async authorMultipleChoiceStandardActivityItem() {
@@ -375,5 +387,39 @@ class BuildLearningPath {
         await expect(this.verifyProductUpdatedMsg).toHaveText("Product '"+SSOISBN+"' information updated successfully.");
         await expect(this.productStatusPlanning).toHaveText("Product status: Planning");
     }
+
+    async associateActivityTag(){
+        await this.activityTitleStub.click();
+        await this.createItem.waitFor();
+        await this.tagsTab.click();
+        await expect(this.verfiyActivityTagsHeading).toHaveText("Activity Tags");
+        await this.caretDown.last().click();
+        await this.taxonomyOption.click();
+        await this.tagOption.click();
+        await this.saveBtn.click();
+        await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
+        await expect(this.tagOptionRemove).toBeVisible();
+        await this.itemsTab.click(); 
+    }
+
+    async associateItemTag(){
+        await this.itemTitleBtn.first().click(); 
+        await this.itemSettingBtn.first().click(); 
+        await this.itemTagsTabBtn.click();
+        await expect(this.verfiyItemTagsHeading).toHaveText("Item Tags");
+        await this.caretDown.last().click();
+        await this.taxonomyOption.click();
+        await this.tagOption.click();
+        await expect(this.tagOptionRemove).toBeVisible();
+        await this.applyBtn.click();
+        await this.saveBtn.click();
+        await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");  
+        await this.itemSettingBtn.first().click();       
+        await this.itemTagsTabBtn.click();
+        await expect(this.tagOptionRemove).toBeVisible();
+        await this.crossBtn.click();
+        await this.backBtn.click();        
+    }
+
 }
 module.exports = { BuildLearningPath };

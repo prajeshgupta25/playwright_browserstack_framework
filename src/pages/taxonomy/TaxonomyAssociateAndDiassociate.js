@@ -1,7 +1,7 @@
 const { expect } = require("@playwright/test");
 
 class TaxonomyAssociateAndDiassociate {
-    constructor(page,SSOISBN,TaxonomyType, TaxonomyType2, TaxonomyType3, TaxonomyOption,TaxonomyOption2, TaxonomyOption3, TaxonomyOption4) {
+    constructor(page,SSOISBN,TaxonomyType, TaxonomyType2, TaxonomyType3, TaxonomyOption,TaxonomyOption2, TaxonomyOption3, TaxonomyOption4,ChapterTaxonomyOption,ChapterTaxonomyType) {
         this.page = page;
         this.dropDown = page.getByTestId('caretDown');
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
@@ -20,6 +20,9 @@ class TaxonomyAssociateAndDiassociate {
         this.saveChangesBtn = page.getByRole('button', { name: /Save Changes/i });
         this.verifyProductTaxonomyUpdateMsg = page.getByText("Product "+SSOISBN+" taxonomies updated successfully.");
         this.deleteTaxonomyTag = page.getByRole('button', { name: "Delete "+TaxonomyOption2+" tag"});
+        this.selectChapterTaxonomyType = page.getByRole('tab', { name: ChapterTaxonomyType, exact: true });
+        this.selectChapterTaxonomyOption = page.getByText(ChapterTaxonomyOption, {exact: true } );
+        this.chapterTaxonomyAssociated = page.getByRole('button', { name: ChapterTaxonomyOption});
     }
 
     async taxonomyAssociateAndDiassociate(SSOISBN,TaxonomyOption,TaxonomyOption2,TaxonomyOption3, TaxonomyOption4) {
@@ -43,6 +46,16 @@ class TaxonomyAssociateAndDiassociate {
         await this.dropDown.last().click();
         await this.taxonomySettingOption.click();
         await this.deleteTaxonomyTag.click();
+        await this.saveChangesBtn.click();
+        await expect(this.verifyProductTaxonomyUpdateMsg).toHaveText("Product "+SSOISBN+" taxonomies updated successfully.");
+    }
+
+    async associateTaxonomyForTagging(SSOISBN,ChapterTaxonomyOption) {
+        await this.dropDown.last().click();
+        await this.taxonomySettingOption.click();
+        await this.selectChapterTaxonomyType.click();
+        await this.selectChapterTaxonomyOption.click();
+        await expect(this.chapterTaxonomyAssociated).toHaveText(ChapterTaxonomyOption);
         await this.saveChangesBtn.click();
         await expect(this.verifyProductTaxonomyUpdateMsg).toHaveText("Product "+SSOISBN+" taxonomies updated successfully.");
     }
