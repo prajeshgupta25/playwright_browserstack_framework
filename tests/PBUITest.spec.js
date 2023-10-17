@@ -74,7 +74,8 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     const Log = new Login(page);
     const CreateProd = new CreateProduct(page,process.env.Discipline);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption,process.env.SSOISBN);
+    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption,process.env.SSOISBN,process.env.ChapterTaxonomyOption);
+    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4,process.env.ChapterTaxonomyOption,process.env.ChapterTaxonomyType);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials
@@ -82,14 +83,22 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     //Create a new Product
     await CreateProd.createProduct(process.env.ProductTitle, process.env.SSOISBN, process.env.Author, process.env.CopyrightYear, process.env.eReaderISBN);
     //Add nodes to Learning Path
-    await BuildLPN.addNodesToLearningPath(process.env.SSOISBN);
+    await BuildLPN.addNodesToLearningPath();
+    //Associate the taxonomy for Tagging
+    await Taxonomy.associateTaxonomyForTagging(process.env.SSOISBN,process.env.ChapterTaxonomyOption);
+    //Associate Activity Tag
+    await BuildLPN.associateActivityTag();
+     //Associate Item Tag
+     await BuildLPN.associateItemTag();
+    //Validate Locked Learning path
+    await BuildLPN.lockLearningPathStructure(process.env.SSOISBN);
 });
 
 test(`@PBS_Integration_Scenarios Validate associate and diassociate taxonomy`, async ({ page }) => {
 
     const Log = new Login(page);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyOption,process.env.TaxonomyOption2);
+    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4,process.env.ChapterTaxonomyOption,process.env.ChapterTaxonomyType);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials
@@ -97,11 +106,11 @@ test(`@PBS_Integration_Scenarios Validate associate and diassociate taxonomy`, a
     //Search and Navigate to the existing Product
     await SearchProd.searchAndNavigateToProduct(process.env.SSOISBN);
     //Associate and diassociate taxonomy
-    await Taxonomy.taxonomyAssociateAndDiassociate(process.env.SSOISBN,process.env.TaxonomyOption,process.env.TaxonomyOption2);
+    await Taxonomy.taxonomyAssociateAndDiassociate(process.env.SSOISBN,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4);
 });
 
 
-test(`@PBS_Integration_Scenarios Validate Publish product`, async ({ page }) => {
+test(`@PBS_Integration_Scenarios Validate Publish product and created files on CM & RS Workspace`, async ({ page }) => {
 
     const Log = new Login(page);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
@@ -114,5 +123,23 @@ test(`@PBS_Integration_Scenarios Validate Publish product`, async ({ page }) => 
     await SearchProd.searchAndNavigateToProduct(process.env.SSOISBN);
     //Validate Publish product
     await Publish.publishProduct(process.env.SSOISBN);
+    //Validate files on CM and RS Workspace
+    const apiContext = await request.newContext();
+    const apiEndpoints = new ApiEndpoints(apiContext,VerifyWorkspacePayload);
+    //Verify Product Workspace
+    const responseJson = await apiEndpoints.verifyProductWorkspace();
+    const courseMasterWorkspaceId = responseJson.workspaces[0].id;
+    console.log(courseMasterWorkspaceId);
+    //Fetch the linked workspace
+    const linkedResourceWorkspaceId = await apiEndpoints.fetchLinkedWorkspace(courseMasterWorkspaceId);
+    console.log(linkedResourceWorkspaceId);
+    //Validate the Course Master Workspace created cdf, gdf, ndf files from the LCS
+    await apiEndpoints.validateCourseMasterWorkspaceCreatedFilesFromLCS(courseMasterWorkspaceId);
+    //Validate the Resource Workspace created txn and activity files from the LCS
+    await apiEndpoints.validateResourceWorkspaceCreatedFilesFromLCS(linkedResourceWorkspaceId);
+    //Validate the CM workspace is deployed successfully
+    await apiEndpoints.validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId);
+    // Add and Delete Folder
+    await Publish.addAndDeleteFolder();
 });
 
