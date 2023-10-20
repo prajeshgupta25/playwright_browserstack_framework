@@ -327,10 +327,6 @@ class BuildLearningPath {
         await this.searchBar.fill(duplicateActivityReferenceId);
         await this.searchBtn.click();        
         await this.addToLearningPathBtn.first().click();
-        await this.generalSettings.waitFor();
-        await this.dropDown.click();
-        await this.practiceItOption.click();
-        await this.saveBtn.click();
         await this.verifyActivityAddedMsg.hover();
         await expect(this.verifyActivityAddedMsg).toHaveText("Activity was successfully added");
         const stubColor = await this.stubColor.nth(3).evaluate((el) => {
