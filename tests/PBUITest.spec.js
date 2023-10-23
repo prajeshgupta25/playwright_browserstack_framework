@@ -38,6 +38,7 @@ test.beforeAll(async({browser}) => {
             continue;
         }
     }
+    await page.close();
     });
 
 test(`@PBS_Integration_Scenarios Verify PBS product with SSOISBN and delete it if exists`, async () => {
@@ -74,8 +75,8 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     const Log = new Login(page);
     const CreateProd = new CreateProduct(page,process.env.Discipline);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption,process.env.SSOISBN,process.env.ChapterTaxonomyOption);
-    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4,process.env.ChapterTaxonomyOption,process.env.ChapterTaxonomyType);
+    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption,process.env.SSOISBN,process.env.BookTaxonomyOption);
+    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4,process.env.BookTaxonomyOption);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials
@@ -85,7 +86,7 @@ test(`@PBS_Integration_Scenarios PB_UI Create Product, add nodes to learning pat
     //Add nodes to Learning Path
     await BuildLPN.addNodesToLearningPath();
     //Associate the taxonomy for Tagging
-    await Taxonomy.associateTaxonomyForTagging(process.env.SSOISBN,process.env.ChapterTaxonomyOption);
+    await Taxonomy.associateTaxonomyForTagging(process.env.SSOISBN,process.env.BookTaxonomyOption);
     //Associate Activity Tag
     await BuildLPN.associateActivityTag();
      //Associate Item Tag
@@ -98,7 +99,7 @@ test(`@PBS_Integration_Scenarios Validate associate and diassociate taxonomy`, a
 
     const Log = new Login(page);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
-    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4,process.env.ChapterTaxonomyOption,process.env.ChapterTaxonomyType);
+    const Taxonomy = new TaxonomyAssociateAndDiassociate(page,process.env.SSOISBN,process.env.TaxonomyType,process.env.TaxonomyType2,process.env.TaxonomyType3,process.env.TaxonomyOption,process.env.TaxonomyOption2,process.env.TaxonomyOption3,process.env.TaxonomyOption4,process.env.BookTaxonomyOption);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
     //Login with Valid credentials

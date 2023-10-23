@@ -1,7 +1,7 @@
 const { expect } = require("@playwright/test");
 
 class TaxonomyAssociateAndDiassociate {
-    constructor(page,SSOISBN,TaxonomyType, TaxonomyType2, TaxonomyType3, TaxonomyOption,TaxonomyOption2, TaxonomyOption3, TaxonomyOption4,ChapterTaxonomyOption,ChapterTaxonomyType) {
+    constructor(page,SSOISBN,TaxonomyType, TaxonomyType2, TaxonomyType3, TaxonomyOption,TaxonomyOption2, TaxonomyOption3, TaxonomyOption4,BookTaxonomyOption) {
         this.page = page;
         this.dropDown = page.getByTestId('caretDown');
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
@@ -20,9 +20,8 @@ class TaxonomyAssociateAndDiassociate {
         this.saveChangesBtn = page.getByRole('button', { name: /Save Changes/i });
         this.verifyProductTaxonomyUpdateMsg = page.getByText("Product "+SSOISBN+" taxonomies updated successfully.");
         this.deleteTaxonomyTag = page.getByRole('button', { name: "Delete "+TaxonomyOption2+" tag"});
-        this.selectChapterTaxonomyType = page.getByRole('tab', { name: ChapterTaxonomyType, exact: true });
-        this.selectChapterTaxonomyOption = page.getByText(ChapterTaxonomyOption, {exact: true } );
-        this.chapterTaxonomyAssociated = page.getByRole('button', { name: ChapterTaxonomyOption});
+        this.selectBookTaxonomyOption = page.getByText(BookTaxonomyOption, {exact: true } );
+        this.bookTaxonomyAssociated = page.getByRole('button', { name: BookTaxonomyOption});
     }
 
     async taxonomyAssociateAndDiassociate(SSOISBN,TaxonomyOption,TaxonomyOption2,TaxonomyOption3, TaxonomyOption4) {
@@ -50,12 +49,11 @@ class TaxonomyAssociateAndDiassociate {
         await expect(this.verifyProductTaxonomyUpdateMsg).toHaveText("Product "+SSOISBN+" taxonomies updated successfully.");
     }
 
-    async associateTaxonomyForTagging(SSOISBN,ChapterTaxonomyOption) {
+    async associateTaxonomyForTagging(SSOISBN,BookTaxonomyOption) {
         await this.dropDown.last().click();
         await this.taxonomySettingOption.click();
-        await this.selectChapterTaxonomyType.click();
-        await this.selectChapterTaxonomyOption.click();
-        await expect(this.chapterTaxonomyAssociated).toHaveText(ChapterTaxonomyOption);
+        await this.selectBookTaxonomyOption.click();
+        await expect(this.bookTaxonomyAssociated).toHaveText(BookTaxonomyOption);
         await this.saveChangesBtn.click();
         await expect(this.verifyProductTaxonomyUpdateMsg).toHaveText("Product "+SSOISBN+" taxonomies updated successfully.");
     }

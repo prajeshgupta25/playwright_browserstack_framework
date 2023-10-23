@@ -2,7 +2,7 @@ const { expect } = require("@playwright/test");
 
 class BuildLearningPath {
 
-    constructor(page,ReadingStubOption,SSOISBN,ChapterTaxonomyOption) {
+    constructor(page,ReadingStubOption,SSOISBN,BookTaxonomyOption) {
         this.page = page;
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
@@ -91,7 +91,7 @@ class BuildLearningPath {
         this.composeQuestion = page.getByRole('textbox');
         this.verfiyActivityTagsHeading = page.getByRole('heading', { name: 'Activity Tags', exact: true });
         this.caretDown = page.getByTestId('caretDown');
-        this.taxonomyOption = page.getByRole('option', { name: ChapterTaxonomyOption, exact: true });
+        this.taxonomyOption = page.getByRole('option', { name: BookTaxonomyOption, exact: true });
         this.tagOption = page.getByText('Chapter Taxonomy Parent Node 1', {exact: true });
         this.tagOptionRemove = page.getByTestId('remove-term-Chapter Taxonomy Parent Node 1');
         this.itemTitleBtn = page.getByRole('button', { name: 'Untitled', exact: true });
