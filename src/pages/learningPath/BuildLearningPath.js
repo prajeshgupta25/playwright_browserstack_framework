@@ -12,7 +12,7 @@ class BuildLearningPath {
         this.addLTI = page.getByRole('menuitem', { name: 'Add LTI', exact: true });
         this.addSCORM = page.getByRole('menuitem', { name: 'Add SCORM', exact: true });
         this.activityStub = page.getByText('Activity Stub', {exact: true });
-        this.activityTitleStub = page.getByText('ActivityTitle Test Activity 1', {exact: true });
+        this.activityTitleStub = page.getByText(/ActivityTitle Test Activity/i);
         this.renameActivityStub = page.getByRole('menuitem', { name: 'Edit name & description', exact: true });
         this.renameFolderStub = page.getByRole('menuitem', { name: 'Edit name', exact: true });
         this.renameStubText = page.getByLabel('Name *');
@@ -143,14 +143,15 @@ class BuildLearningPath {
         await this.folderMenu.nth(1).click();
         await this.renameActivityStub.click();
         await this.renameStubText.click();
-        await this.renameStubText.type(" Test Activity 1");
+        await this.renameStubText.type(" Test Activity "+ Date.now());
         await this.stubDescriptionText.click();
-        await this.stubDescriptionText.type("Description Activity 1");
+        await this.stubDescriptionText.type("Description Activity "+ Date.now());
         await this.saveBtn.nth(1).click();
         await this.folderMenu.first().click();
         await this.renameFolderStub.click();
         await this.renameStubText.click();
-        await this.renameStubText.type(" Test Folder 1");
+        await this.renameStubText.clear();
+        await this.renameStubText.type("Test Folder "+ Date.now());
         await this.saveBtn.click();
         await this.folderMenu.nth(1).click();
         await this.addReadingStub();
