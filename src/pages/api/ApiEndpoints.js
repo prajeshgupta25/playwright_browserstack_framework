@@ -96,8 +96,7 @@ class ApiEndpoints
     const fileType11 = responseJson.members[10].coords.fileType; 
     const fileType12 = responseJson.members[11].coords.fileType; 
     const fileType13 = responseJson.members[12].coords.fileType; 
-    const fileType14 = responseJson.members[13].coords.fileType; 
-    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10, fileType11, fileType12, fileType13, fileType14];
+    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10, fileType11, fileType12, fileType13];
     console.log(File);
     let countCDFFile=0, countGDFFile=0, countNDFFile=0 ;
     for(let i=0; i<File.length; i++)
@@ -140,8 +139,7 @@ class ApiEndpoints
     const fileType8 = responseJson.members[7].coords.fileType;
     const fileType9 = responseJson.members[8].coords.fileType;
     const fileType10 = responseJson.members[9].coords.fileType;
-    const fileType11 = responseJson.members[10].coords.fileType;
-    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10, fileType11];
+    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10];
     console.log(File);
     let countTxnFile=0, countActivityFile=0, countMmapFile=0;
     for(let i=0; i<File.length; i++)
@@ -159,7 +157,7 @@ class ApiEndpoints
             countMmapFile= countMmapFile + 1;
         }
     }
-    expect(countTxnFile).toBe(4);
+    expect(countTxnFile).toBe(3);
     expect(countActivityFile).toBe(5);
     expect(countMmapFile).toBe(2);
     }

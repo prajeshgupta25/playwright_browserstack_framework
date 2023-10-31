@@ -2,7 +2,7 @@ const { expect } = require("@playwright/test");
 
 class BuildLearningPath {
 
-    constructor(page,ReadingStubOption,SSOISBN,BookTaxonomyOption) {
+    constructor(page,ReadingStubOption,SSOISBN) {
         this.page = page;
         this.learningPathMenu =  page.getByRole('button', { name: /learning-path-menu/i });
         this.folderMenu =  page.getByRole('button', { name: /learning path node actions/i });
@@ -16,7 +16,7 @@ class BuildLearningPath {
         this.renameActivityStub = page.getByRole('menuitem', { name: 'Edit name & description', exact: true });
         this.renameFolderStub = page.getByRole('menuitem', { name: 'Edit name', exact: true });
         this.renameStubText = page.getByLabel('Name *');
-        this.stubDescriptionText = page.getByLabel('Description', {exact: true });
+        this.stubDescriptionText = page.getByTestId('Edit name & description').getByLabel('Description', {exact: true });
         this.createActivityBtn = page.getByText('Create activity');
         this.createItem = page.locator("button[data-authorapi-tooltip='Create item']");
         this.addNew = page.getByRole('button', { name: /Add new/i });
@@ -32,7 +32,7 @@ class BuildLearningPath {
         this.addToLearningPathBtn = page.getByRole('button', { name: /ADD TO LEARNING PATH/i });
         this.verifyActivityAddedMsg = page.getByText("Activity was successfully added");
         this.verifyActivitySaveMsg = page.getByText("Activity was successfully saved");
-        this.detailTab = page.locator("[data-authorapi-tooltip='Details']");
+        this.detailTab = page.getByRole('button', { name: 'Details Tab', exact: true });
         this.tagsTab = page.locator("[data-authorapi-tooltip='Tags']");
         this.itemsTab =  page.getByRole('button', { name: /Items Tab/i });
         this.referenceId = page.locator("#Reference"); 
@@ -77,6 +77,11 @@ class BuildLearningPath {
         this.activityTitleBtn = page.locator("[data-authorapi-selector='open-activity']");
         this.saveDropDownBtn = page.locator('.lrn-btn-save-dropdown');
         this.duplicateActivityBtn = page.getByRole('button', { name: 'Duplicate Activity', exact: true });
+        this.verfiyDuplicateActivityHeading = page.getByRole('heading', { name: 'Duplicate Activity?', exact: true });
+        this.duplicateBtn = page.getByRole('button', { name: 'Duplicate', exact: true });
+        this.verfiyDuplicateActivityNameHeading = page.getByRole('heading', { name: 'Give Duplicated Activity a New Name', exact: true });
+        this.duplicateActivityName = page.getByLabel('Activity Name *');
+        this.saveDuplicateActivity = page.getByTestId('duplicate-activity-title-button');
         this.duplicateActivityMsg = page.getByText("Your activity has been successfully duplicated. You can begin editing the duplicated activity below (click to dismiss).");
         this.addCGID = page.getByTestId('cgid');
         this.verfiyLTIStubHeading = page.getByRole('heading', { name: 'LTI Stub', exact: true });
@@ -93,9 +98,9 @@ class BuildLearningPath {
         this.composeQuestion = page.getByRole('textbox');
         this.verfiyActivityTagsHeading = page.getByRole('heading', { name: 'Activity Tags', exact: true });
         this.caretDown = page.getByTestId('caretDown');
-        this.taxonomyOption = page.getByRole('option', { name: BookTaxonomyOption, exact: true });
-        this.tagOption = page.getByText('Chapter Taxonomy Parent Node 1', {exact: true });
-        this.tagOptionRemove = page.getByTestId('remove-term-Chapter Taxonomy Parent Node 1');
+        this.taxonomyOption = page.getByRole('option', { name: /Medical Assisting: Administrative and Clinical Competencies/i });
+        this.tagOption = page.getByText('Unit 1. Introduction to Health Care', {exact: true });
+        this.tagOptionRemove = page.getByTestId('remove-term-Unit 1. Introduction to Health Care');
         this.itemTitleBtn = page.getByRole('button', { name: 'Untitled', exact: true });
         this.itemSettingBtn = page.locator("[data-authorapi-selector='settings']");
         this.itemTagsTabBtn = page.getByRole('button', { name: 'Tags', exact: true });
@@ -145,7 +150,7 @@ class BuildLearningPath {
         await this.renameStubText.click();
         await this.renameStubText.type(" Test Activity "+ Date.now());
         await this.stubDescriptionText.click();
-        await this.stubDescriptionText.type("Description Activity "+ Date.now());
+        await this.stubDescriptionText.type("Test Description Activity "+ Date.now());
         await this.saveBtn.nth(1).click();
         await this.folderMenu.first().click();
         await this.renameFolderStub.click();
@@ -324,6 +329,12 @@ class BuildLearningPath {
         await this.activityTitleBtn.first().click();
         await this.saveDropDownBtn.click();
         await this.duplicateActivityBtn.click();
+        await expect(this.verfiyDuplicateActivityHeading).toHaveText("Duplicate Activity?");        
+        await this.duplicateBtn.click();
+        await expect(this.verfiyDuplicateActivityNameHeading).toHaveText("Give Duplicated Activity a New Name");   
+        await this.duplicateActivityName.click();
+        await this.duplicateActivityName.type("Test Duplicate Activity "+ Date.now());
+        await this.saveDuplicateActivity.click();
         await expect(this.duplicateActivityMsg).toHaveText("Your activity has been successfully duplicated. You can begin editing the duplicated activity below (click to dismiss).");
         await this.detailTab.click();
         const duplicateActivityReferenceId = await this.referenceId.getAttribute('value');
