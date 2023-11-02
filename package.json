@@ -8,7 +8,7 @@
     "env:dev": "cross-env test_env=dev npx playwright test",
     "env:qa": "cross-env test_env=qa npx playwright test",
     "env:stage": "cross-env test_env=stage npx playwright test",
-    "test:perf": "cross-env test_env=perf npx playwright test",
+    "env:perf": "cross-env test_env=perf npx playwright test",
     "test:prod": "cross-env test_env=prod npx playwright test"
   },
   "keywords": [],
