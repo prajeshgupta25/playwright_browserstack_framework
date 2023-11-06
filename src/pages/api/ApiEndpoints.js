@@ -83,83 +83,29 @@ class ApiEndpoints
         })
     expect(response.ok()).toBeTruthy();
     const responseJson = await response.json();
-    const fileType1 = responseJson.members[0].coords.fileType;
-    const fileType2 = responseJson.members[1].coords.fileType;
-    const fileType3 = responseJson.members[2].coords.fileType;
-    const fileType4 = responseJson.members[3].coords.fileType;
-    const fileType5 = responseJson.members[4].coords.fileType;
-    const fileType6 = responseJson.members[5].coords.fileType;
-    const fileType7 = responseJson.members[6].coords.fileType;
-    const fileType8 = responseJson.members[7].coords.fileType;
-    const fileType9 = responseJson.members[8].coords.fileType;
-    const fileType10 = responseJson.members[9].coords.fileType;
-    const fileType11 = responseJson.members[10].coords.fileType; 
-    const fileType12 = responseJson.members[11].coords.fileType; 
-    const fileType13 = responseJson.members[12].coords.fileType; 
-    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10, fileType11, fileType12, fileType13];
+    const File = new Array();
+    const map = {};
+    for(let i=0; i<13; i++)
+    {
+        File.push(responseJson.members[i].coords.fileType);      
+    }
     console.log(File);
-    let countCDFFile=0, countGDFFile=0, countNDFFile=0 ;
-    for(let i=0; i<File.length; i++)
+    for(let i=0;i<File.length;i++)
     {
-        if(File[i]=="cdf")
-        {
-            countCDFFile= countCDFFile + 1;
+        if(map[File[i]]){
+            map[File[i]]+=1
         }
-        if(File[i]=="gdf")
-        {
-            countGDFFile= countGDFFile + 1;
-        }
-        if(File[i]=="ndf")
-        {
-            countNDFFile= countNDFFile + 1;
+        else{
+            map[File[i]]=1
         }
     }
-    expect(countCDFFile).toBe(1);
-    expect(countGDFFile).toBe(1);
-    expect(countNDFFile).toBe(1);
-    }
-
-    async validateResourceWorkspaceCreatedFilesFromLCS(linkedResourceWorkspaceId)
-    {
-        const response = await this.apiContext.get(process.env.LCSEndPoint + "/lcs/v2/ws/workspaces/"+ linkedResourceWorkspaceId +"/inheritedRevisionCoords",
-        {
-            headers: {
-                'accept': 'application/json',
-            },
-        })
-    expect(response.ok()).toBeTruthy();
-    const responseJson = await response.json();
-    const fileType1 = responseJson.members[0].coords.fileType;
-    const fileType2 = responseJson.members[1].coords.fileType;
-    const fileType3 = responseJson.members[2].coords.fileType;
-    const fileType4 = responseJson.members[3].coords.fileType;
-    const fileType5 = responseJson.members[4].coords.fileType;
-    const fileType6 = responseJson.members[5].coords.fileType;
-    const fileType7 = responseJson.members[6].coords.fileType;
-    const fileType8 = responseJson.members[7].coords.fileType;
-    const fileType9 = responseJson.members[8].coords.fileType;
-    const fileType10 = responseJson.members[9].coords.fileType;
-    const File = [fileType1, fileType2, fileType3, fileType4, fileType5, fileType6, fileType7, fileType8, fileType9, fileType10];
-    console.log(File);
-    let countTxnFile=0, countActivityFile=0, countMmapFile=0;
-    for(let i=0; i<File.length; i++)
-    {
-        if(File[i]=="txn")
-        {
-            countTxnFile= countTxnFile + 1;
-        }
-        if(File[i]=="activity")
-        {
-            countActivityFile= countActivityFile + 1;
-        }
-        if(File[i]=="mmap")
-        {
-            countMmapFile= countMmapFile + 1;
-        }
-    }
-    expect(countTxnFile).toBe(3);
-    expect(countActivityFile).toBe(5);
-    expect(countMmapFile).toBe(2);
+    console.log(map);
+    expect(map.cdf).toBe(1);
+    expect(map.gdf).toBe(1);
+    expect(map.ndf).toBe(1);
+    expect(map.txn).toBe(3);
+    expect(map.activity).toBe(5);
+    expect(map.mmap).toBe(2);
     }
 
     async validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId)
