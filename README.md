@@ -28,6 +28,9 @@ export BASE_URL='https://pb-qa.cengage.com'; export Taxman_URL='https://taxman-q
 * STAGE
 export BASE_URL='https://pb-stage.cengage.com'; export Taxman_URL='https://taxman-stage.cengage.com'; export SSOISBN='1111000250701'; export eReaderISBN='9781111111112' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:stage
 
+* PERF
+export BASE_URL='https://pb-perf.cengage.com'; export Taxman_URL='https://taxman-perf.cengage.com'; export SSOISBN='1111000160701'; export eReaderISBN='9781111111113' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:perf
+
 ## On Window:
 * DEV
 $Env:BASE_URL='https://pb-dev.cengage.com'; $Env:Taxman_URL='https://taxman-dev.cengage.com'; $Env:SSOISBN='1111000200705'; $Env:eReaderISBN='9781111111110' ;$Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:dev
@@ -37,6 +40,9 @@ $Env:BASE_URL='https://pb-qa.cengage.com'; $Env:Taxman_URL='https://taxman-qa.ce
 
 * STAGE
 $Env:BASE_URL='https://pb-stage.cengage.com'; $Env:Taxman_URL='https://taxman-stage.cengage.com'; $Env:SSOISBN='1111000250701'; $Env:eReaderISBN='9781111111112'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:stage
+
+* PERF
+$Env:BASE_URL='https://pb-perf.cengage.com'; $Env:Taxman_URL='https://taxman-perf.cengage.com'; $Env:SSOISBN='1111000160701'; $Env:eReaderISBN='9781111111113'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:perf
 
 1. Set the BrowserAndVersion Example: $Env:BrowserAndVersion='chrome@latest'
 # For more BrowserAndVersion refer to the following options:
