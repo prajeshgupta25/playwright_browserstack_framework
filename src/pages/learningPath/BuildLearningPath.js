@@ -83,7 +83,7 @@ class BuildLearningPath {
         this.duplicateActivityName = page.getByLabel('Activity Name *');
         this.saveDuplicateActivity = page.getByTestId('duplicate-activity-title-button');
         this.duplicateActivityMsg = page.getByText("Your activity has been successfully duplicated. You can begin editing the duplicated activity below (click to dismiss).");
-        this.addCGID = page.getByTestId('cgid');
+        this.addCGID = page.getByTestId('externalAppActivityId');
         this.verfiyLTIStubHeading = page.getByRole('heading', { name: 'LTI Stub', exact: true });
         this.verfiySCORMStubHeading = page.getByRole('heading', { name: 'SCORM Stub', exact: true });
         this.productStatusPlanning = page.getByText('Product status: Planning');     
