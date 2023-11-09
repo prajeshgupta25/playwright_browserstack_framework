@@ -83,29 +83,29 @@ class ApiEndpoints
         })
     expect(response.ok()).toBeTruthy();
     const responseJson = await response.json();
-    const File = new Array();
-    const map = {};
+    const fileType = new Array();
+    const fileTypeCount = {};
     for(let i=0; i<13; i++)
     {
-        File.push(responseJson.members[i].coords.fileType);      
+        fileType.push(responseJson.members[i].coords.fileType);      
     }
-    console.log(File);
-    for(let i=0;i<File.length;i++)
+    console.log(fileType);
+    for(let i=0;i<fileType.length;i++)
     {
-        if(map[File[i]]){
-            map[File[i]]+=1
+        if(fileTypeCount[fileType[i]]){
+            fileTypeCount[fileType[i]]+=1
         }
         else{
-            map[File[i]]=1
+            fileTypeCount[fileType[i]]=1
         }
     }
-    console.log(map);
-    expect(map.cdf).toBe(1);
-    expect(map.gdf).toBe(1);
-    expect(map.ndf).toBe(1);
-    expect(map.txn).toBe(3);
-    expect(map.activity).toBe(5);
-    expect(map.mmap).toBe(2);
+    console.log(fileTypeCount);
+    expect(fileTypeCount.cdf).toBe(1);
+    expect(fileTypeCount.gdf).toBe(1);
+    expect(fileTypeCount.ndf).toBe(1);
+    expect(fileTypeCount.txn).toBe(3);
+    expect(fileTypeCount.activity).toBe(5);
+    expect(fileTypeCount.mmap).toBe(2);
     }
 
     async validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId)
