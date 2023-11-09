@@ -132,10 +132,8 @@ test(`@PBS_Integration_Scenarios Validate Publish product and created files on C
     //Fetch the linked workspace
     const linkedResourceWorkspaceId = await apiEndpoints.fetchLinkedWorkspace(courseMasterWorkspaceId);
     console.log(linkedResourceWorkspaceId);
-    //Validate the Course Master Workspace created cdf, gdf, ndf files from the LCS
+    //Validate the created cdf, gdf, ndf, txn, activity and mmap files from the latest checkpoint on LCS
     await apiEndpoints.validateCourseMasterWorkspaceCreatedFilesFromLCS(courseMasterWorkspaceId);
-    //Validate the Resource Workspace created txn and activity files from the LCS
-    await apiEndpoints.validateResourceWorkspaceCreatedFilesFromLCS(linkedResourceWorkspaceId);
     //Validate the CM workspace is deployed successfully
     await apiEndpoints.validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId);
     // Add and Delete Folder
