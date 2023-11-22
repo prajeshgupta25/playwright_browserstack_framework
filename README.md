@@ -20,13 +20,13 @@ Documentation for writing Automate test scripts with BrowserStack: https://www.b
 ## Run Test Execution local:
 ## On Mac:
 * DEV
-export BASE_URL='https://pb-dev.cengage.com'; export Taxman_URL='https://taxman-dev.cengage.com'; export SSOISBN='1111000200705'; export eReaderISBN='9781111111110' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:dev
+export BASE_URL='https://pb-dev.cengage.com'; export Taxman_URL='https://taxman-dev.cengage.com'; export SSOISBN='1111000200705'; export eReaderISBN='9781111111152' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:dev
 
 * QA
-export BASE_URL='https://pb-qa.cengage.com'; export Taxman_URL='https://taxman-qa.cengage.com'; export SSOISBN='1111000190707'; export eReaderISBN='9781111111111' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:qa
+export BASE_URL='https://pb-qa.cengage.com'; export Taxman_URL='https://taxman-qa.cengage.com'; export SSOISBN='1111000190707'; export eReaderISBN='9781111111101' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:qa
 
 * STAGE
-export BASE_URL='https://pb-stage.cengage.com'; export Taxman_URL='https://taxman-stage.cengage.com'; export SSOISBN='1111000250701'; export eReaderISBN='9781111111112' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:stage
+export BASE_URL='https://pb-stage.cengage.com'; export Taxman_URL='https://taxman-stage.cengage.com'; export SSOISBN='1111000250701'; export eReaderISBN='9781111111172' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:stage
 
 * PERF
 export BASE_URL='https://pb-perf.cengage.com'; export Taxman_URL='https://taxman-perf.cengage.com'; export SSOISBN='1111000160701'; export eReaderISBN='9781111111113' ; export BrowserAndVersion='chrome@latest'; export OS='OSX Big Sur'; export Server='local'; export USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; export PASSWORD='Password@01'; npm run env:perf
