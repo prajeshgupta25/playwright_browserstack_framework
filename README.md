@@ -33,13 +33,13 @@ export BASE_URL='https://pb-perf.cengage.com'; export Taxman_URL='https://taxman
 
 ## On Window:
 * DEV
-$Env:BASE_URL='https://pb-dev.cengage.com'; $Env:Taxman_URL='https://taxman-dev.cengage.com'; $Env:SSOISBN='1111000200705'; $Env:eReaderISBN='9781111111110' ;$Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:dev
+$Env:BASE_URL='https://pb-dev.cengage.com'; $Env:Taxman_URL='https://taxman-dev.cengage.com'; $Env:SSOISBN='1111000200705'; $Env:eReaderISBN='9781111111152' ;$Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:dev
 
 * QA
-$Env:BASE_URL='https://pb-qa.cengage.com'; $Env:Taxman_URL='https://taxman-qa.cengage.com'; $Env:SSOISBN='1111000190707'; $Env:eReaderISBN='9781111111111'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:qa
+$Env:BASE_URL='https://pb-qa.cengage.com'; $Env:Taxman_URL='https://taxman-qa.cengage.com'; $Env:SSOISBN='1111000190707'; $Env:eReaderISBN='9781111111101'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:qa
 
 * STAGE
-$Env:BASE_URL='https://pb-stage.cengage.com'; $Env:Taxman_URL='https://taxman-stage.cengage.com'; $Env:SSOISBN='1111000250701'; $Env:eReaderISBN='9781111111112'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:stage
+$Env:BASE_URL='https://pb-stage.cengage.com'; $Env:Taxman_URL='https://taxman-stage.cengage.com'; $Env:SSOISBN='1111000250701'; $Env:eReaderISBN='9781111111172'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:stage
 
 * PERF
 $Env:BASE_URL='https://pb-perf.cengage.com'; $Env:Taxman_URL='https://taxman-perf.cengage.com'; $Env:SSOISBN='1111000160701'; $Env:eReaderISBN='9781111111113'; $Env:BrowserAndVersion='chrome@latest'; $Env:OS='Windows 11'; $Env:Server='local'; $Env:USER_NAME='mast_e2e_auto_internaluser@cloud.cengage.com'; $Env:PASSWORD='Password@01'; npm run env:perf

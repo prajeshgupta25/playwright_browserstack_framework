@@ -25,7 +25,7 @@ class BuildLearningPath {
         this.saveBtn = page.getByRole('button', { name: /Save/i });
         this.saveAndNextBtn = page.getByRole('button', { name: /Save And Next/i });
         this.itemAddedMsg = page.getByText("Item successfully added to the Activity");
-        this.stubColor = page.locator('.css-zbgv8c');
+        this.stubColor = page.locator('.css-ly6o4e');
         this.backBtn = page.getByRole('button', { name: /Back/i });
         this.createdItem = page.locator('.lrn-list-view-item.lrn-flyout-wrapper');
         this.searchActivitiesBtn = page.getByRole('button', { name: /Search activities/i });
@@ -52,7 +52,7 @@ class BuildLearningPath {
         this.tokenHighlightItem = page.getByText("Token highlight", {exact: true }); 
         this.highlightAnswer = page.getByRole('button', { name: /Risus et tincidunt turpis facilisis./i });
         this.mathOption = page.getByText('Math', {exact: true });
-        this.clozeMathItem = page.getByText("Cloze math", {exact: true });
+        this.clozeMathItem = page.getByText("Label image with math", {exact: true });
         this.responseDropdown = page.getByText("Response  1", {exact: true });
         this.responseValue = page.locator('.lrn_math_editable.mq-editable-field.mq-math-mode'); 
         this.chemistryOption = page.getByText('Chemistry', {exact: true });
@@ -100,7 +100,7 @@ class BuildLearningPath {
         this.caretDown = page.getByTestId('caretDown');
         this.taxonomyOption = page.getByRole('option', { name: /Medical Assisting: Administrative and Clinical Competencies/i });
         this.tagOption = page.getByText('Unit 1. Introduction to Health Care', {exact: true });
-        this.tagOptionRemove = page.getByTestId('remove-term-Unit 1. Introduction to Health Care');
+        this.tagOptionRemove = page.getByRole('button', { name: 'Remove selected term', exact: true });
         this.itemTitleBtn = page.getByRole('button', { name: 'Untitled', exact: true });
         this.itemSettingBtn = page.locator("[data-authorapi-selector='settings']");
         this.itemTagsTabBtn = page.getByRole('button', { name: 'Tags', exact: true });
@@ -142,8 +142,7 @@ class BuildLearningPath {
         await this.authorMatchListActivityItem(); 
         await this.authorEssayWithTextActivityItem();  
         await this.authorTokenHighlightActivityItem();
-        await this.authorClozeMathActivityItem();
-        await this.authorClozeChemistryActivityItem();
+        await this.authorLabelImageWithMathActivityItem();
         await this.authorRatingActivityItem();       
         await this.folderMenu.nth(1).click();
         await this.renameActivityStub.click();
@@ -260,14 +259,14 @@ class BuildLearningPath {
         expect(bool4).toBeTruthy();
     }
 
-    async authorClozeMathActivityItem() {
+    async authorLabelImageWithMathActivityItem() {
         await this.createItem.click();
         await this.addNew.click();
         await this.mathOption.click();
         await this.clozeMathItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Cloze Math");
+        await this.composeQuestion.first().type("Testing Label image with math");
         await this.responseDropdown.click();
         await this.responseValue.first().waitFor();
         await this.responseValue.first().click();
@@ -279,27 +278,6 @@ class BuildLearningPath {
         await this.backBtn.click();
         const bool5 = await this.createdItem.nth(5).isVisible();
         expect(bool5).toBeTruthy();
-    }
-
-    async authorClozeChemistryActivityItem() {
-        await this.createItem.click();
-        await this.addNew.click();
-        await this.chemistryOption.click();
-        await this.clozeChemistryItem.click();
-        await this.composeQuestion.first().click();
-        await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Cloze Chemistry");
-        await this.responseDropdown.click();
-        await this.responseValue.first().waitFor();
-        await this.responseValue.first().click();
-        await this.responseValue.first().type("6CO2 + 6H2O");
-        await this.responseDropdown.click();
-        await this.saveBtn.click();
-        await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
-        await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
-        await this.backBtn.click();
-        const bool6 = await this.createdItem.nth(6).isVisible();
-        expect(bool6).toBeTruthy();
     }
 
     async authorRatingActivityItem() {
@@ -314,8 +292,8 @@ class BuildLearningPath {
         await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
         await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
         await this.backBtn.click();
-        const bool7 = await this.createdItem.nth(7).isVisible();
-        expect(bool7).toBeTruthy();
+        const bool6 = await this.createdItem.nth(6).isVisible();
+        expect(bool6).toBeTruthy();
     }
 
     async addExistingActivityByDuplicateToLPN(activityReferenceId){
