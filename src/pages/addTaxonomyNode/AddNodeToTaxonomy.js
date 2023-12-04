@@ -71,8 +71,7 @@ class AddNodeToTaxonomy {
         await this.nodeDescription.fill("Child Description");
         await this.saveBtn.click();
         await expect(this.verifyNodeAddedMsg).toHaveText("Taxonomy term was successfully added!");
-        await this.nodeDropDownMenu.last().click();
-        await this.nodeDropDownMenu.last().click();
+        await this.nodeDropDownMenu.last().dblclick();
         await this.nodeMenu.last().click();
         await this.deleteNode.click();
         await expect(this.verifyNodeDeletedMsg).toHaveText("Taxonomy term was successfully deleted!");
