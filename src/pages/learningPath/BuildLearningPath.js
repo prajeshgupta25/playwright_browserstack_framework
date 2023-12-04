@@ -31,6 +31,7 @@ class BuildLearningPath {
         this.searchActivitiesBtn = page.getByRole('button', { name: /Search activities/i });
         this.addToLearningPathBtn = page.getByRole('button', { name: /ADD TO LEARNING PATH/i });
         this.verifyActivityAddedMsg = page.getByText("Activity was successfully added");
+        this.verifyActivityAddedToLPNMsg = page.getByText("Activity successfully added to Learning Path");
         this.verifyActivitySaveMsg = page.getByText("Activity was successfully saved");
         this.detailTab = page.getByRole('button', { name: 'Details Tab', exact: true });
         this.tagsTab = page.locator("[data-authorapi-tooltip='Tags']");
@@ -107,6 +108,12 @@ class BuildLearningPath {
         this.verfiyItemTagsHeading = page.getByRole('heading', { name: 'Item Tags', exact: true });
         this.applyBtn = page.getByRole('button', { name: 'APPLY', exact: true });
         this.crossBtn = page.locator("[data-authorapi-selector='item-settings-exit-button']");
+        this.viewOrAddToBanksDropdown = page.getByRole('button', { name: 'view banks dropdown', exact: true });
+        this.viewActivityBankBtn = page.getByRole('menuitem', { name: 'View Activity Bank', exact: true });
+        this.createActivityBankBtn = page.getByRole('button', { name: 'CREATE ACTIVITY', exact: true });
+        this.addTitleActivity = page.getByTestId('add-activity-title-modal-input');
+        this.saveActivityBankBtn = page.getByTestId('save-activity-title-modal-button');
+        this.confirmBtn = page.getByRole('button', { name: 'Confirm', exact: true });        
     }
 
     async addNodesToLearningPath() {
@@ -411,6 +418,42 @@ class BuildLearningPath {
         await expect(this.tagOptionRemove).toBeVisible();
         await this.crossBtn.click();
         await this.backBtn.click();        
+    }
+
+    async createActivityViaActivityBankAndAddToLPN(){
+        await this.viewOrAddToBanksDropdown.click();
+        await this.viewActivityBankBtn.click();
+        await this.createActivityBankBtn.click();
+        await this.addTitleActivity.click();
+        await this.addTitleActivity.type("Activity Created Via Activity Bank");
+        await this.saveActivityBankBtn.last().click();
+        await this.createItem.click();
+        await this.addNew.click();
+        await this.multipleChoiceItem.click();
+        await this.composeQuestion.first().click();
+        await this.composeQuestion.first().clear();
+        await this.composeQuestion.first().type("Testing MCQ");
+        await this.selectAnswer.waitFor();
+        await this.selectAnswer.click();
+        await this.saveBtn.click();
+        await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
+        await this.backBtn.click();
+        const bool = await this.createdItem.isVisible();
+        expect(bool).toBeTruthy();
+        await this.detailTab.click();
+        const createdActivityReferenceId = await this.referenceId.getAttribute('value');
+        console.log(createdActivityReferenceId);
+        await this.backBtn.click();
+        await this.searchBar.click();
+        await this.searchBar.fill(createdActivityReferenceId);
+        await this.searchBtn.click();        
+        await this.addToLearningPathBtn.first().click();
+        await this.generalSettings.waitFor();
+        await this.dropDown.click();
+        await this.practiceItOption.click();
+        await this.saveBtn.click();
+        await this.confirmBtn.click();
+        await expect(this.verifyActivityAddedToLPNMsg).toHaveText("Activity successfully added to Learning Path");         
     }
 
 }

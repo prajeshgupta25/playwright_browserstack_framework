@@ -113,6 +113,7 @@ test(`@PBS_Integration_Scenarios Validate Publish product and created files on C
 
     const Log = new Login(page);
     const SearchProd = new SearchAndNavigateToProduct(page,process.env.ProductTitle);
+    const BuildLPN = new BuildLearningPath(page,process.env.ReadingStubOption,process.env.SSOISBN);
     const Publish = new PublishProduct(page,process.env.SSOISBN);
     //Launch the PB URL
     await Log.launchProductBuilderURL(process.env.BASE_URL);
@@ -136,7 +137,15 @@ test(`@PBS_Integration_Scenarios Validate Publish product and created files on C
     await apiEndpoints.validateCourseMasterWorkspaceCreatedFilesFromLCS(courseMasterWorkspaceId);
     //Validate the CM workspace is deployed successfully
     await apiEndpoints.validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId);
+    //Validate create activity from activity Bank and add created activity to LPN
+    await BuildLPN.createActivityViaActivityBankAndAddToLPN();
     // Add and Delete Folder
     await Publish.addAndDeleteFolder();
+    //Validate micro publish product  
+    await Publish.microPublishProduct(process.env.SSOISBN);
+    //Validate the created cdf, gdf, ndf, txn, activity and mmap files from the latest checkpoint on LCS
+    await apiEndpoints.validateCourseMasterWorkspaceCreatedFilesFromLCSAfterMicroPublish(courseMasterWorkspaceId);
+    //Validate the CM workspace is deployed successfully
+    await apiEndpoints.validateWorkspaceDeployedFromLCS(courseMasterWorkspaceId);
 });
 
