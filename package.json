@@ -15,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.36.1",
-    "browserstack-local": "^1.5.1"
+    "@playwright/test": "^1.40.1",
+    "browserstack-local": "^1.5.5"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
