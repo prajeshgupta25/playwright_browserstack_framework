@@ -84,6 +84,39 @@ class ApiEndpoints
         const responseJson = await response.json();
         const fileType = new Array();
         const fileTypeCount = {};
+        for (let i = 0; i < 12; i++) {
+            const reponseObjectValue = responseJson.members[i].coords;
+            fileType.push(reponseObjectValue.fileType);
+        }
+        console.log(fileType);
+        for (let i = 0; i < fileType.length; i++) {
+            if (fileTypeCount[fileType[i]]) {
+                fileTypeCount[fileType[i]] += 1
+            }
+            else {
+                fileTypeCount[fileType[i]] = 1
+            }
+        }
+        console.log(fileTypeCount);
+        expect(fileTypeCount.cdf).toBe(1);
+        expect(fileTypeCount.gdf).toBe(1);
+        expect(fileTypeCount.ndf).toBe(1);
+        expect(fileTypeCount.txn).toBe(3);
+        expect(fileTypeCount.activity).toBe(4);
+        expect(fileTypeCount.mmap).toBe(2);
+    }
+
+    async validateCourseMasterWorkspaceCreatedFilesFromLCSAfterMicroPublish(courseMasterWorkspaceId) {
+        const response = await this.apiContext.get(process.env.LCSEndPoint + "/lcs/v2/ws/workspaces/" + courseMasterWorkspaceId + "/inheritedRevisionCoords",
+            {
+                headers: {
+                    'accept': 'application/json',
+                },
+            })
+        expect(response.ok()).toBeTruthy();
+        const responseJson = await response.json();
+        const fileType = new Array();
+        const fileTypeCount = {};
         for (let i = 0; i < 13; i++) {
             const reponseObjectValue = responseJson.members[i].coords;
             fileType.push(reponseObjectValue.fileType);
@@ -103,39 +136,6 @@ class ApiEndpoints
         expect(fileTypeCount.ndf).toBe(1);
         expect(fileTypeCount.txn).toBe(3);
         expect(fileTypeCount.activity).toBe(5);
-        expect(fileTypeCount.mmap).toBe(2);
-    }
-
-    async validateCourseMasterWorkspaceCreatedFilesFromLCSAfterMicroPublish(courseMasterWorkspaceId) {
-        const response = await this.apiContext.get(process.env.LCSEndPoint + "/lcs/v2/ws/workspaces/" + courseMasterWorkspaceId + "/inheritedRevisionCoords",
-            {
-                headers: {
-                    'accept': 'application/json',
-                },
-            })
-        expect(response.ok()).toBeTruthy();
-        const responseJson = await response.json();
-        const fileType = new Array();
-        const fileTypeCount = {};
-        for (let i = 0; i < 14; i++) {
-            const reponseObjectValue = responseJson.members[i].coords;
-            fileType.push(reponseObjectValue.fileType);
-        }
-        console.log(fileType);
-        for (let i = 0; i < fileType.length; i++) {
-            if (fileTypeCount[fileType[i]]) {
-                fileTypeCount[fileType[i]] += 1
-            }
-            else {
-                fileTypeCount[fileType[i]] = 1
-            }
-        }
-        console.log(fileTypeCount);
-        expect(fileTypeCount.cdf).toBe(1);
-        expect(fileTypeCount.gdf).toBe(1);
-        expect(fileTypeCount.ndf).toBe(1);
-        expect(fileTypeCount.txn).toBe(3);
-        expect(fileTypeCount.activity).toBe(6);
         expect(fileTypeCount.mmap).toBe(2);
     }
 

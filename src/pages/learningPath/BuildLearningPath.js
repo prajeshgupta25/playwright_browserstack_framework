@@ -113,7 +113,9 @@ class BuildLearningPath {
         this.createActivityBankBtn = page.getByRole('button', { name: 'CREATE ACTIVITY', exact: true });
         this.addTitleActivity = page.getByTestId('add-activity-title-modal-input');
         this.saveActivityBankBtn = page.getByTestId('save-activity-title-modal-button');
-        this.confirmBtn = page.getByRole('button', { name: 'Confirm', exact: true });        
+        this.confirmBtn = page.getByRole('button', { name: 'Confirm', exact: true });   
+        this.verfiyActivitySettingsHeading = page.getByRole('heading', { name: 'Activity Settings', exact: true });    
+        this.totalPointsPossible = page.getByTestId('totalPointsPossible');
     }
 
     async addNodesToLearningPath() {
@@ -352,6 +354,10 @@ class BuildLearningPath {
     async addLTIStub() {
         await this.folderMenu.first().click();
         await this.addLTI.click();
+        await this.verfiyActivitySettingsHeading.waitFor();
+        await this.totalPointsPossible.click();
+        await this.totalPointsPossible.fill("1");  
+        await this.saveAndNextBtn.click();         
         await this.addCGID.click();
         await this.addCGID.type("C40YZG1QGBYNRH8RME569AY45ZNNZZDJ");
         await this.saveBtn.click();  
@@ -362,6 +368,10 @@ class BuildLearningPath {
     async addSCORMStub() {
         await this.folderMenu.first().click();
         await this.addSCORM.click();
+        await this.verfiyActivitySettingsHeading.waitFor();
+        await this.totalPointsPossible.click();
+        await this.totalPointsPossible.fill("1");  
+        await this.saveAndNextBtn.click();
         await this.addCGID.click();
         await this.addCGID.type("ZZ8QEL1RC1A4T3JEXA9ZHXEX8RCJCYQ4");
         await this.saveBtn.click();     
