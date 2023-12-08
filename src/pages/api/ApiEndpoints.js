@@ -84,7 +84,7 @@ class ApiEndpoints
         const responseJson = await response.json();
         const fileType = new Array();
         const fileTypeCount = {};
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < responseJson.members.length; i++) {
             const reponseObjectValue = responseJson.members[i].coords;
             fileType.push(reponseObjectValue.fileType);
         }
@@ -117,7 +117,7 @@ class ApiEndpoints
         const responseJson = await response.json();
         const fileType = new Array();
         const fileTypeCount = {};
-        for (let i = 0; i < 13; i++) {
+        for (let i = 0; i < responseJson.members.length; i++) {
             const reponseObjectValue = responseJson.members[i].coords;
             fileType.push(reponseObjectValue.fileType);
         }
