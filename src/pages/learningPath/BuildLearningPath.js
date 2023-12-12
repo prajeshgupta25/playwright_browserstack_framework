@@ -102,7 +102,7 @@ class BuildLearningPath {
         this.taxonomyOption = page.getByRole('option', { name: /Medical Assisting: Administrative and Clinical Competencies/i });
         this.tagOption = page.getByText('Unit 1. Introduction to Health Care', {exact: true });
         this.tagOptionRemove = page.getByRole('button', { name: 'Remove selected term', exact: true });
-        this.itemTitleBtn = page.getByRole('button', { name: 'Untitled', exact: true });
+        this.itemTitleBtn = page.getByRole('button', { name: /Testing MCQ/i });
         this.itemSettingBtn = page.locator("[data-authorapi-selector='settings']");
         this.itemTagsTabBtn = page.getByRole('button', { name: 'Tags', exact: true });
         this.verfiyItemTagsHeading = page.getByRole('heading', { name: 'Item Tags', exact: true });
@@ -179,7 +179,7 @@ class BuildLearningPath {
         await this.multipleChoiceItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing MCQ");
+        await this.composeQuestion.first().type("Testing MCQ "+ Date.now());
         await this.selectAnswer.waitFor();
         await this.selectAnswer.click();
         await this.saveBtn.click();
@@ -197,7 +197,7 @@ class BuildLearningPath {
         await this.fillInTheBlankClozeWithTextItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Fill In The Blank Cloze With Text");
+        await this.composeQuestion.first().type("Testing Fill In The Blank Cloze With Text "+ Date.now());
         await this.responseField.waitFor();
         await this.responseField.click();
         await this.responseField.type("xyz");
@@ -216,7 +216,7 @@ class BuildLearningPath {
         await this.matchListItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Match List");
+        await this.composeQuestion.first().type("Testing Match List "+ Date.now());
         await this.matchListChoiceA.first().waitFor();
         await this.matchListChoiceA.first().click();
         await this.matchListBox.first().click();
@@ -239,10 +239,7 @@ class BuildLearningPath {
         await this.essayWithTextItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Essay With Text");
-        await this.textBox.click();
-        await this.textBox.clear();
-        await this.textBox.type("Write an essay");
+        await this.composeQuestion.first().type("Testing Essay With Text "+ Date.now());
         await this.saveBtn.click();
         await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
         await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
@@ -258,7 +255,7 @@ class BuildLearningPath {
         await this.tokenHighlightItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Token Highlight");
+        await this.composeQuestion.first().type("Testing Token Highlight "+ Date.now());
         await this.highlightAnswer.first().click();
         await this.saveBtn.click();
         await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
@@ -275,7 +272,7 @@ class BuildLearningPath {
         await this.clozeMathItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Label image with math");
+        await this.composeQuestion.first().type("Testing Label image with math "+ Date.now());
         await this.responseDropdown.click();
         await this.responseValue.first().waitFor();
         await this.responseValue.first().click();
@@ -296,7 +293,7 @@ class BuildLearningPath {
         await this.ratingItem.click();
         await this.composeQuestion.first().click();
         await this.composeQuestion.first().clear();
-        await this.composeQuestion.first().type("Testing Rating");
+        await this.composeQuestion.first().type("Testing Rating "+ Date.now());
         await this.saveBtn.click();
         await expect(this.itemAddedMsg).toHaveText("Item successfully added to the Activity");
         await expect(this.verifyActivitySaveMsg).toHaveText("Activity was successfully saved");
