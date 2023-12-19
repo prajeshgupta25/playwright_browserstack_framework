@@ -149,13 +149,16 @@ class ApiEndpoints
         })
     expect(response.ok()).toBeTruthy();
     const responseJson = await response.json();
-    const systemId = responseJson.deployments[0].systemId;
-    const status = responseJson.deployments[0].status;
-    console.log(status);
-    expect(systemId).toBe("gopher");
-    expect(status).toBe("Success");
-    }
-    
+        for (let i = 0; i < responseJson.deployments.length; i++) {
+            const systemId = responseJson.deployments[i].systemId;
+            const status = responseJson.deployments[i].status;
+            console.log(systemId);
+            console.log(status);
+            if ((systemId === "gopher") || (systemId === "CCS")) {
+                expect(status).toBe("Success");
+            }
+        }
+    }    
 }
 
 module.exports = { ApiEndpoints };
