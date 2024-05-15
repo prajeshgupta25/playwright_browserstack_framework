@@ -46,7 +46,7 @@ class PublishProduct {
         await this.pencilIcon.click();
         await this.reviewState.click();
         await this.updateBtn.click();
-        await expect(this.verifyProductUpdatedMsg).toHaveText("Product '"+SSOISBN+"' information updated successfully.");
+        await expect(this.verifyProductUpdatedMsg).toHaveText("Product '"+process.env.SSOISBN+"' information updated successfully.");
         await expect(this.productStatusReview).toHaveText("Product status: Review");
         await this.publishIcon.click();
         await this.publishProductBtn.click();
